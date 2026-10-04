@@ -9,6 +9,7 @@ const footerDestinations = [
   { href: "/destinations/uttarakhand", label: "Uttarakhand" },
   { href: "/destinations/rajasthan", label: "Rajasthan" },
   { href: "/destinations/delhi", label: "Delhi" },
+  { href: "/destinations/punjab", label: "Punjab & Amritsar" },
 ];
 
 const footerLinks = {

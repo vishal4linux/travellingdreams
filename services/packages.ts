@@ -35,6 +35,27 @@ export async function searchPackages(filters: PackageSearchFilters) {
   if (filters.budget) {
     where.basePrice = { lte: filters.budget };
   }
+  if (filters.q) {
+    const q = filters.q.trim();
+    if (q.length >= 2) {
+      const textMatch: Prisma.PackageWhereInput = {
+        OR: [
+          { title: { contains: q } },
+          { placesCovered: { contains: q } },
+          { highlights: { contains: q } },
+          { description: { contains: q } },
+          { metaDescription: { contains: q } },
+          { startingCity: { contains: q } },
+        ],
+      };
+      const existingAnd = where.AND
+        ? Array.isArray(where.AND)
+          ? where.AND
+          : [where.AND]
+        : [];
+      where.AND = [...existingAnd, textMatch];
+    }
+  }
 
   return prisma.package.findMany({
     where,

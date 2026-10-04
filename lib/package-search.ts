@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const packageSearchSchema = z.object({
+  q: z.string().optional(),
   destination: z.string().optional(),
   duration: z.coerce.number().optional(),
   budget: z.coerce.number().optional(),

@@ -29,6 +29,16 @@ export default async function PackagesPage({ searchParams }: Props) {
       <div className="container-site">
         <SectionHeading title="Holiday Packages" description="Filter by destination, duration, theme and budget." />
         <form className="mt-8 grid gap-4 rounded-2xl border border-border bg-surface-elevated p-5 md:grid-cols-3 lg:grid-cols-6">
+          <div className="md:col-span-2 lg:col-span-2">
+            <Label htmlFor="q">Search packages</Label>
+            <Input
+              id="q"
+              name="q"
+              defaultValue={filters.q ?? ""}
+              placeholder="Manali, Ladakh, Spiti, Amritsar, Rajasthan…"
+              className="mt-1.5"
+            />
+          </div>
           <div>
             <Label htmlFor="destination">Destination</Label>
             <select
@@ -79,6 +89,12 @@ export default async function PackagesPage({ searchParams }: Props) {
             </button>
           </div>
         </form>
+        {packages.length === 0 ? (
+          <p className="mt-10 text-center text-ink-muted">
+            No packages match your search. Try keywords like Manali, Dharamshala, Leh Ladakh, Spiti, Shimla, Kasauli,
+            Rajasthan or Uttarakhand.
+          </p>
+        ) : null}
         <div className="mt-10 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {packages.map((p) => {
             const dest = p.destinations[0]?.destination;

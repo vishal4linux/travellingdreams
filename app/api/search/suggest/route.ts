@@ -23,8 +23,17 @@ export async function GET(request: Request) {
       select: { name: true, slug: true, destination: { select: { slug: true } } },
     }),
     prisma.package.findMany({
-      where: { isPublished: true, title: { contains: q } },
-      take: 5,
+      where: {
+        isPublished: true,
+        OR: [
+          { title: { contains: q } },
+          { placesCovered: { contains: q } },
+          { highlights: { contains: q } },
+          { description: { contains: q } },
+          { metaDescription: { contains: q } },
+        ],
+      },
+      take: 8,
       select: { title: true, slug: true, destinations: { take: 1, select: { destination: { select: { slug: true } } } } },
     }),
   ]);

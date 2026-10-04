@@ -244,6 +244,12 @@ async function seedHotels(destinationIds: Map<string, string>, amenityIds: Map<s
 }
 
 async function seedPackages(destinationIds: Map<string, string>) {
+  const activeSlugs = FEATURED_PACKAGES.map((p) => p.slug);
+  await prisma.package.updateMany({
+    where: { slug: { notIn: activeSlugs } },
+    data: { isPublished: false, isFeatured: false },
+  });
+
   for (const p of FEATURED_PACKAGES) {
     const destinationId = destinationIds.get(p.destinationSlug);
     if (!destinationId) continue;
@@ -269,16 +275,34 @@ async function seedPackages(destinationIds: Map<string, string>) {
         reviewCount: 40,
         heroImage: p.heroImage,
         highlights: p.highlights,
-        isFeatured: true,
+        description: p.metaDescription ?? p.highlights,
+        isFeatured: p.isFeatured ?? true,
+        isPublished: true,
         metaTitle: `${p.title} | Travelling Dreams`,
-        metaDescription: p.highlights,
+        metaDescription: p.metaDescription ?? p.highlights,
       },
       update: {
         title: p.title,
         basePrice: p.basePrice,
-        isFeatured: true,
+        placesCovered: p.placesCovered,
+        startingCity: p.startingCity,
         heroImage: p.heroImage,
         highlights: p.highlights,
+        description: p.metaDescription ?? p.highlights,
+        isFeatured: p.isFeatured ?? true,
+        isPublished: true,
+        metaDescription: p.metaDescription ?? p.highlights,
+        metaTitle: `${p.title} | Travelling Dreams`,
+      },
+    });
+
+    await prisma.packageImage.deleteMany({ where: { packageId: pkg.id } });
+    await prisma.packageImage.create({
+      data: {
+        packageId: pkg.id,
+        url: p.heroImage,
+        alt: p.title,
+        sortOrder: 0,
       },
     });
 
