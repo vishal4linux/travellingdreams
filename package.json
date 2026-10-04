@@ -17,8 +17,7 @@
     "db:seed:hostinger": "bash scripts/seed-hostinger.sh",
     "db:ensure-admin": "node prisma/seed-admin.mjs",
     "db:setup": "prisma db push && tsx prisma/seed.ts",
-    "postinstall": "prisma generate",
-    "postbuild": "node prisma/seed-admin.mjs"
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -8,9 +8,7 @@ if [ -z "${DATABASE_URL:-}" ]; then
   exit 1
 fi
 
-export PRISMA_CLIENT_ENGINE_TYPE=binary
-
-echo "Generating Prisma Client (binary engine)…"
+echo "Generating Prisma Client…"
 npx prisma generate
 
 echo "Syncing schema…"
