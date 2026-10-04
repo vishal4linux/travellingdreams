@@ -6,6 +6,9 @@ import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { SITE } from "@/lib/constants/site";
 import "./globals.css";
 
+/** Avoid Prisma calls at build time (Hostinger build may run before DB is seeded). */
+export const dynamic = "force-dynamic";
+
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",

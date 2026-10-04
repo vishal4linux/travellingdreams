@@ -2,7 +2,6 @@ import { GuestCheckoutForm } from "@/components/booking/GuestCheckoutForm";
 import { ButtonLink } from "@/components/ui/button";
 import { hotelDetailPath } from "@/lib/constants/hotel";
 import { parseHotelSearchParams } from "@/lib/hotel-search";
-import { decimalToNumber } from "@/lib/serialize";
 import { stayContextFromFilters } from "@/services/availability";
 import { calculateHotelStayPrice } from "@/services/pricing/hotel";
 import { getHotelDetailWithAvailability } from "@/services/hotels";

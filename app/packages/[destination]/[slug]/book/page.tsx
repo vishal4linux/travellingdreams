@@ -35,7 +35,7 @@ export default async function PackageBookPage({ params, searchParams }: Props) {
           packageSlug={slug}
           travelDate={travelDate}
           adults={adults}
-          children={children}
+          childCount={children}
           label={pkg.title}
           baseTotal={pricing.totalAmount}
           summaryLines={[

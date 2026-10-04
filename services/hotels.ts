@@ -16,12 +16,13 @@ import {
   type RoomStayAvailability,
 } from "@/services/room-inventory";
 import type { Prisma } from "@prisma/client";
+import type { Decimal } from "@prisma/client/runtime/library";
 import { cache } from "react";
 
 export type { StayContext };
 
 function startingRateFromRooms(
-  roomTypes: { baseRate: unknown; discountedRate: unknown | null }[]
+  roomTypes: { baseRate: Decimal; discountedRate: Decimal | null }[]
 ): number | null {
   if (!roomTypes.length) return null;
   const rates = roomTypes.map(

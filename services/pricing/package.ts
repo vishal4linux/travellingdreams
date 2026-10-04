@@ -1,10 +1,11 @@
 import { decimalToNumber } from "@/lib/serialize";
 import type { PackagePrice } from "@prisma/client";
+import type { Decimal } from "@prisma/client/runtime/library";
 
 export function calculatePackagePrice(
-  basePrice: unknown,
-  adultPrice: unknown | null,
-  childPrice: unknown | null,
+  basePrice: Decimal,
+  adultPrice: Decimal | null,
+  childPrice: Decimal | null,
   adults: number,
   children: number,
   addOnTotal = 0

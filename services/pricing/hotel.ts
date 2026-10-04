@@ -1,10 +1,11 @@
 import { countNights } from "@/lib/dates";
 import { decimalToNumber } from "@/lib/serialize";
+import type { Decimal } from "@prisma/client/runtime/library";
 
 type RoomRateInput = {
-  baseRate: unknown;
-  discountedRate: unknown | null;
-  taxPercent: unknown;
+  baseRate: Decimal;
+  discountedRate: Decimal | null;
+  taxPercent: Decimal | null;
 };
 
 export function calculateHotelStayPrice(

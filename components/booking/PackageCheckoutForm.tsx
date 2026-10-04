@@ -21,7 +21,7 @@ type Props = {
   packageSlug: string;
   travelDate: string;
   adults: number;
-  children: number;
+  childCount: number;
   label: string;
   baseTotal: number;
   summaryLines: string[];
@@ -33,7 +33,7 @@ export function PackageCheckoutForm({
   packageSlug,
   travelDate,
   adults,
-  children,
+  childCount,
   label,
   baseTotal,
   summaryLines,
@@ -75,7 +75,7 @@ export function PackageCheckoutForm({
             >
               <option value="">Flexible date ({travelDate})</option>
               {departures.map((d) => (
-                <option key={d.id} value={d.id} disabled={d.seatsLeft < adults + children}>
+                <option key={d.id} value={d.id} disabled={d.seatsLeft < adults + childCount}>
                   {d.startDate} · {d.seatsLeft} seats left
                 </option>
               ))}
@@ -117,7 +117,7 @@ export function PackageCheckoutForm({
             : travelDate,
           departureDateId: departureDateId || undefined,
           adults,
-          children,
+          children: childCount,
           addOns: addOnsPayload.length ? addOnsPayload : undefined,
         }}
         summary={{ label, total, lines }}
