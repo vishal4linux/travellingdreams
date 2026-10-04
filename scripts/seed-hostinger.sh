@@ -18,6 +18,6 @@ echo "Creating admin user…"
 node prisma/seed-admin.mjs
 
 echo "Seeding demo content (may take 1–2 minutes)…"
-node --import tsx prisma/seed.ts
+node ./node_modules/tsx/dist/cli.mjs prisma/seed.ts
 
 echo "Done."

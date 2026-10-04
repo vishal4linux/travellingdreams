@@ -195,12 +195,27 @@ After the first successful deploy, open **SSH**, `cd` to the Node build folder (
 
 ```bash
 export PATH=/opt/alt/alt-nodejs20/root/usr/bin:$PATH
-cd ~/domains/YOUR-SITE/hbuilds/last-source
+
+# Use the folder that contains node_modules (after a successful deploy):
+cd ~/domains/YOUR-SITE/hbuilds/source/repository
+# If that path does not exist, try last-source and run npm install first.
+
 export DATABASE_URL='mysql://USER:PASSWORD@localhost:3306/DATABASE'
+
 npm install
+npx prisma generate
 npm run db:push
 npm run db:seed
 ```
+
+Find the app root:
+
+```bash
+find ~/domains/YOUR-SITE/hbuilds -name package.json 2>/dev/null
+ls ~/domains/YOUR-SITE/hbuilds/source/repository/node_modules/@prisma/client
+```
+
+If `node_modules` is missing, run `npm install` in that directory before seeding.
 
 Do **not** run bare `npx prisma` on the server — it may install Prisma 7 and fail. Always use `npm run db:push` / `npm run db:seed` (project uses Prisma 6).
 
