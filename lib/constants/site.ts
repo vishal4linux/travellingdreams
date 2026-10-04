@@ -1,12 +1,25 @@
 export const SITE = {
   name: "Travelling Dreams",
-  partner: "LA Riqueza Hotels",
+  partner: "LA Riqueza Hotels LLP",
   partnerTagline: "Hospitality Partner: LA Riqueza Hotels",
+  partnerWebsite: "https://lariquezahotels.com/",
+  partnerEmail: "info@lariquezahotels.com",
+  partnerPhones: ["+91 98109 65967", "+91 98119 98192", "+91 1169652672"] as const,
+  partnerOffice:
+    "Office no 531, Westend Mall Janakpuri, New Delhi 110058",
   tagline: "Handpicked hotels, unforgettable holidays and customized journeys across India.",
   regions: ["Uttarakhand", "Himachal Pradesh", "Delhi"] as const,
   whatsappMessageDefault:
     "Hi Travelling Dreams, I would like help planning my trip.",
 } as const;
+
+/** Official LA Riqueza partner hotel names (see lariquezahotels.com) */
+export const LA_RIQUEZA_PROPERTY_NAMES = [
+  "LA Riqueza Hotel Raunsali – Kanatal",
+  "LA Riqueza Hotel Dhanolti View – Dhanolti",
+  "LA Riqueza Hotel Koala Inn Mcleodganj – Dharamshala",
+  "LA Riqueza Hotel Galleu Hill Resort – Kufri, Shimla",
+] as const;
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },

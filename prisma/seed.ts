@@ -98,6 +98,14 @@ async function seedAmenities() {
 }
 
 async function seedHotels(destinationIds: Map<string, string>, amenityIds: Map<string, string>) {
+  const partnerSlugs = LA_RIQUEZA_HOTELS.map((h) => h.slug);
+  await prisma.hotel.deleteMany({
+    where: {
+      isLaRiqueza: true,
+      slug: { notIn: partnerSlugs },
+    },
+  });
+
   for (const h of LA_RIQUEZA_HOTELS) {
     const destinationId = destinationIds.get(h.destinationSlug);
     if (!destinationId) continue;

@@ -24,8 +24,12 @@ export default async function ContactPage({ searchParams }: Props) {
           </p>
         ) : null}
         <ul className="mt-8 space-y-3 text-ink-muted">
-          <li>Email: hello@travellingdreams.in</li>
-          <li>Phone / WhatsApp: see site footer</li>
+          <li>Travelling Dreams enquiries: hello@travellingdreams.in</li>
+          <li>
+            Partner ({SITE.partner}): {SITE.partnerEmail}
+          </li>
+          <li>Phone: {SITE.partnerPhones.join(" · ")}</li>
+          <li>Delhi office: {SITE.partnerOffice}</li>
           <li>Regions: {SITE.regions.join(", ")}</li>
         </ul>
         {wa !== "#" ? (

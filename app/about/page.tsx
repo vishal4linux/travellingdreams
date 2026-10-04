@@ -14,8 +14,9 @@ export default function AboutPage() {
         <SectionHeading title={`About ${SITE.name}`} description={SITE.tagline} />
         <p className="mt-8 leading-relaxed text-ink-muted">
           {SITE.name} is a premium travel brand specializing in North India—handpicked hotels,
-          fixed departures and customized holidays. Our hospitality partner {SITE.partner} extends
-          trusted stays across Uttarakhand and Himachal Pradesh.
+          fixed departures and customized holidays. Our hospitality partner {SITE.partner} (New Delhi)
+          brings 20+ years of hotel management expertise with properties in Kanatal, Dhanolti, McLeod Ganj
+          and Kufri—plus hotel leasing, representation and sales & marketing services across India.
         </p>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2">
           {TRUST_FEATURES.map((f) => (
