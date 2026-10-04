@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { SiteFooterWrapper } from "@/components/layout/SiteFooterWrapper";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { TopBarWrapper } from "@/components/layout/TopBarWrapper";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { SITE } from "@/lib/constants/site";
 import "./globals.css";
@@ -59,6 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${cormorant.variable}`}>
       <body className="flex min-h-screen flex-col font-sans">
+        <TopBarWrapper />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooterWrapper />

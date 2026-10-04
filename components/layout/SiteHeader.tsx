@@ -39,17 +39,22 @@ export function SiteHeader() {
           "sticky top-0 z-50 w-full transition-all duration-300",
           scrolled
             ? "border-b border-border bg-surface/95 shadow-[var(--shadow-nav)] backdrop-blur-md"
-            : "bg-surface/80 backdrop-blur-sm"
+            : "border-b border-transparent bg-surface/90 backdrop-blur-md"
         )}
       >
         <div className="container-site">
           <div className="flex h-16 flex-wrap items-center justify-between gap-3 lg:h-[4.25rem] lg:flex-nowrap">
-            <Link href="/" className="group flex shrink-0 flex-col">
-              <span className="font-display text-xl font-semibold tracking-tight text-ink lg:text-2xl">
+            <Link href="/" className="group flex shrink-0 items-center gap-2">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-brand-800 text-sm font-bold text-white shadow-sm">
+                TD
+              </span>
+              <span className="flex flex-col">
+              <span className="text-lg font-bold tracking-tight text-ink lg:text-xl">
                 {SITE.name}
               </span>
               <span className="hidden text-[10px] font-medium uppercase tracking-widest text-ink-subtle sm:block">
                 {SITE.partnerTagline}
+              </span>
               </span>
             </Link>
 
@@ -61,7 +66,12 @@ export function SiteHeader() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:bg-brand-50 hover:text-brand-800"
+                  className={cn(
+                    "rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent-50 hover:text-accent-800",
+                    pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
+                      ? "bg-accent-50 text-accent-800"
+                      : "text-ink-muted"
+                  )}
                 >
                   {link.label}
                 </Link>

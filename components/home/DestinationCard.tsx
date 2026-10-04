@@ -16,9 +16,9 @@ export function DestinationCard({ name, slug, tagline, cardImage, state }: Props
     "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop";
 
   return (
-    <Link href={`/destinations/${slug}`} className="group block h-full">
-      <Card className="h-full overflow-hidden border-0 p-0">
-        <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[3/4]">
+    <Link href={`/destinations/${slug}`} className="group block h-full min-w-[240px] sm:min-w-0">
+      <Card className="h-full overflow-hidden border-0 p-0 ring-1 ring-border/50">
+        <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[3/4] lg:aspect-[4/5]">
           <Image
             src={image}
             alt={name}
@@ -33,7 +33,7 @@ export function DestinationCard({ name, slug, tagline, cardImage, state }: Props
                 {state}
               </p>
             ) : null}
-            <h3 className="mt-1 font-display text-2xl font-semibold">{name}</h3>
+            <h3 className="mt-1 text-xl font-bold tracking-tight">{name}</h3>
             {tagline ? (
               <p className="mt-2 line-clamp-2 text-sm text-brand-100">{tagline}</p>
             ) : null}

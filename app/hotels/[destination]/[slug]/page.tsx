@@ -1,4 +1,5 @@
 import { HotelGallery } from "@/components/hotels/HotelGallery";
+import { HotelLocationMap } from "@/components/hotels/HotelLocationMap";
 import { HotelJsonLd } from "@/components/hotels/HotelJsonLd";
 import { HotelMobileBar } from "@/components/hotels/HotelMobileBar";
 import { HotelStayBanner } from "@/components/hotels/HotelStayBanner";
@@ -83,11 +84,6 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
       bookContext.checkIn ? ` from ${bookContext.checkIn}` : ""
     }${bookContext.checkOut ? ` to ${bookContext.checkOut}` : ""}.`
   );
-
-  const mapEmbedSrc =
-    hotel.latitude != null && hotel.longitude != null
-      ? `https://www.google.com/maps?q=${hotel.latitude},${hotel.longitude}&z=14&output=embed`
-      : `https://www.google.com/maps?q=${encodeURIComponent(`${hotel.city}, ${hotel.state}, India`)}&z=12&output=embed`;
 
   const showBookBanner = String(rawSearch.book ?? "") === "1";
 
@@ -263,21 +259,18 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
                 </section>
               ) : null}
 
-              <section className="mt-10">
-                <h2 className="font-display text-2xl font-semibold">Location</h2>
-                <div className="mt-4 aspect-[16/9] overflow-hidden rounded-2xl border border-border">
-                  <iframe
-                    title={`Map — ${hotel.name}`}
-                    className="h-full w-full border-0"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    src={mapEmbedSrc}
-                  />
-                </div>
+              <div className="mt-10">
+                <HotelLocationMap
+                  name={hotel.name}
+                  city={hotel.city}
+                  state={hotel.state}
+                  latitude={hotel.latitude}
+                  longitude={hotel.longitude}
+                />
                 <p className="mt-2 text-xs text-ink-subtle">
-                  Map is indicative. Exact location shared on booking confirmation.
+                  Map is indicative. Exact pin shared on booking confirmation.
                 </p>
-              </section>
+              </div>
 
               {hotel.reviews.length > 0 ? (
                 <section className="mt-10">

@@ -1,5 +1,7 @@
+import { PackageItineraryExplorer } from "@/components/packages/PackageItineraryExplorer";
 import { PackageJsonLd } from "@/components/packages/PackageJsonLd";
 import { PackageMobileBar } from "@/components/packages/PackageMobileBar";
+import { PackagePhotoGallery } from "@/components/packages/PackagePhotoGallery";
 import { ButtonLink } from "@/components/ui/button";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { getPackageDetail } from "@/services/packages";
@@ -48,13 +50,18 @@ export default async function PackageDetailPage({ params }: Props) {
         image={hero}
         durationDays={pkg.durationDays}
       />
-      <section className="relative min-h-[40vh] bg-brand-950 text-white">
-        {hero ? <Image src={hero} alt="" fill className="object-cover opacity-45" priority /> : null}
-        <div className="container-site relative flex min-h-[40vh] flex-col justify-end pb-12 pt-24">
-          <h1 className="font-display text-4xl font-semibold md:text-5xl">{pkg.title}</h1>
+      <section className="relative min-h-[45vh] bg-brand-950 text-white">
+        {hero ? <Image src={hero} alt="" fill className="object-cover opacity-50" priority /> : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/40 to-transparent" />
+        <div className="container-site relative flex min-h-[45vh] flex-col justify-end pb-12 pt-24">
+          <p className="text-sm font-semibold uppercase tracking-wider text-accent-300">{destName}</p>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">{pkg.title}</h1>
           <p className="mt-3 text-lg text-brand-100">
-            {pkg.durationNights} nights / {pkg.durationDays} days · from {formatINR(base)}
+            {pkg.durationNights} nights / {pkg.durationDays} days · from {formatINR(base)} / person
           </p>
+          {pkg.placesCovered ? (
+            <p className="mt-2 max-w-2xl text-sm text-brand-200">{pkg.placesCovered}</p>
+          ) : null}
         </div>
       </section>
 
@@ -67,27 +74,16 @@ export default async function PackageDetailPage({ params }: Props) {
                 <p className="mt-3 leading-relaxed text-ink-muted">{pkg.highlights}</p>
               </section>
             ) : null}
-            {pkg.placesCovered ? (
-              <section>
-                <h2 className="font-display text-2xl font-semibold">Places covered</h2>
-                <p className="mt-3 text-ink-muted">{pkg.placesCovered}</p>
-              </section>
-            ) : null}
+            <PackagePhotoGallery images={pkg.images} title={pkg.title} />
             {pkg.itinerary.length ? (
               <section>
-                <h2 className="font-display text-2xl font-semibold">Itinerary</h2>
-                <ol className="mt-4 space-y-4">
-                  {pkg.itinerary.map((day) => (
-                    <li key={day.dayNumber} className="rounded-xl border border-border p-4">
-                      <p className="font-medium">
-                        Day {day.dayNumber}: {day.title}
-                      </p>
-                      <p className="mt-2 text-sm text-ink-muted">{day.description}</p>
-                      {day.meals ? <p className="mt-1 text-xs text-ink-subtle">Meals: {day.meals}</p> : null}
-                      {day.stay ? <p className="text-xs text-ink-subtle">Stay: {day.stay}</p> : null}
-                    </li>
-                  ))}
-                </ol>
+                <h2 className="text-2xl font-bold tracking-tight text-ink">Interactive itinerary</h2>
+                <p className="mt-2 text-ink-muted">
+                  Tap each day to preview photos, partner hotel stays and open locations on the map.
+                </p>
+                <div className="mt-6">
+                  <PackageItineraryExplorer days={pkg.itinerary} packageTitle={pkg.title} />
+                </div>
               </section>
             ) : null}
             {pkg.inclusions ? (

@@ -1,10 +1,15 @@
 import { BlogCard } from "@/components/home/BlogCard";
 import { DestinationCard } from "@/components/home/DestinationCard";
 import { HeroSearch } from "@/components/home/HeroSearch";
+import { HorizontalScrollRow } from "@/components/home/HorizontalScrollRow";
 import { HotelCard } from "@/components/home/HotelCard";
+import { MoodTrips } from "@/components/home/MoodTrips";
 import { OfferCard } from "@/components/home/OfferCard";
 import { PackageCard } from "@/components/home/PackageCard";
+import { PopularSearches } from "@/components/home/PopularSearches";
 import { TestimonialCard } from "@/components/home/TestimonialCard";
+import { TrendingDestinations } from "@/components/home/TrendingDestinations";
+import { TrustStrip } from "@/components/home/TrustStrip";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ButtonLink } from "@/components/ui/button";
 import { TRUST_FEATURES, SITE } from "@/lib/constants/site";
@@ -43,88 +48,96 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-brand-950 text-white">
+      <section className="relative min-h-[88vh] overflow-hidden bg-brand-950 text-white">
         <div
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40"
+          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"
           aria-hidden
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-950/75 via-brand-950/55 to-brand-950" />
-        <div className="container-site relative pb-16 pt-12 md:pb-24 md:pt-16">
-          <p className="text-sm font-medium uppercase tracking-widest text-brand-200">
+        <div className="absolute inset-0 bg-brand-950/50" aria-hidden />
+        <div className="hero-mesh absolute inset-0" aria-hidden />
+        <div className="container-site relative flex min-h-[88vh] flex-col justify-center pb-28 pt-10 md:pb-32 md:pt-14">
+          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-100 backdrop-blur-sm">
             {SITE.partnerTagline}
           </p>
-          <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl text-balance">
-            Travel Beyond Expectations
+          <h1 className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl text-balance">
+            Experience India,{" "}
+            <span className="font-display italic font-semibold text-accent-300">Better</span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-brand-100">{SITE.tagline}</p>
+          <p className="mt-5 max-w-xl text-lg text-brand-100 md:text-xl">{SITE.tagline}</p>
           <HeroSearch destinations={searchDestinations} />
+          <TrendingDestinations destinations={destinations} />
         </div>
       </section>
+
+      <TrustStrip />
+      <PopularSearches />
 
       <section className="section-padding bg-surface">
         <div className="container-site">
           <SectionHeading
-            eyebrow="Explore India"
-            title="Popular Destinations"
+            eyebrow="Travellers' favourite"
+            title="Trending destinations"
+            titleAccent="destinations"
             description="Handpicked regions we know deeply—from Himachal peaks to Rajasthan heritage."
           />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 lg:hidden">
+            <HorizontalScrollRow>
+              {destinations.map((d) => (
+                <div key={d.id} className="w-[240px] shrink-0">
+                  <DestinationCard {...d} />
+                </div>
+              ))}
+            </HorizontalScrollRow>
+          </div>
+          <div className="mt-10 hidden gap-6 lg:grid lg:grid-cols-4">
             {destinations.map((d) => (
               <DestinationCard key={d.id} {...d} />
             ))}
           </div>
-          <div className="mt-8 text-center">
-            <ButtonLink href="/destinations" variant="secondary">
+          <div className="mt-10 text-center">
+            <ButtonLink href="/destinations" variant="secondary" size="lg">
               View all destinations
             </ButtonLink>
           </div>
         </div>
       </section>
 
-      <section className="section-padding bg-brand-50/50">
+      <section className="section-padding bg-white">
         <div className="container-site">
           <SectionHeading
-            eyebrow={SITE.partner}
-            title="Partner Hotels"
-            description="LA Riqueza properties across Uttarakhand and Himachal, Horizon by Shanti in Delhi, and London Castle Kanatal opening soon."
-          />
-          <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            {partnerHotels.map((h) => (
-              <HotelCard
-                key={h.id}
-                name={h.name}
-                slug={h.slug}
-                city={h.city}
-                state={h.state}
-                starRating={h.starRating}
-                shortDescription={h.shortDescription}
-                imageUrl={h.images[0]?.url ?? null}
-                isFeatured={h.isFeatured}
-                guestRating={h.guestRating}
-                startingRate={decimalToNumber(h.startingRate)}
-                amenityNames={h.amenityNames}
-                destinationSlug={h.destination.slug}
-                brandLabel={h.brandLabel}
-                openingSoon={h.openingSoon}
-              />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <ButtonLink href="/la-riqueza-hotels" variant="outline">
-              All LA Riqueza properties
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-surface">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow="Holiday packages"
-            title="Featured Holiday Packages"
+            eyebrow="Our handpicked"
+            title="Trip-worthy holiday packages"
+            titleAccent="holiday packages"
             description="Fixed departures and curated routes with meals, transport and stays included."
           />
-          <div className="mt-10 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-10 lg:hidden">
+            <HorizontalScrollRow>
+              {packages.map((p) => {
+                const dest = p.destinations[0]?.destination;
+                return (
+                  <div key={p.id} className="w-[320px] shrink-0">
+                    <PackageCard
+                      title={p.title}
+                      slug={p.slug}
+                      destinationSlug={dest?.slug ?? "india"}
+                      destinationName={dest?.name ?? "India"}
+                      durationNights={p.durationNights}
+                      durationDays={p.durationDays}
+                      startingCity={p.startingCity}
+                      placesCovered={p.placesCovered}
+                      hotelCategory={p.hotelCategory}
+                      meals={p.meals}
+                      transport={p.transport}
+                      basePrice={decimalToNumber(p.basePrice) ?? 0}
+                      rating={p.rating}
+                      heroImage={p.heroImage}
+                    />
+                  </div>
+                );
+              })}
+            </HorizontalScrollRow>
+          </div>
+          <div className="mt-10 hidden gap-8 md:grid md:grid-cols-2 xl:grid-cols-3">
             {packages.map((p) => {
               const dest = p.destinations[0]?.destination;
               return (
@@ -148,27 +161,88 @@ export default async function HomePage() {
               );
             })}
           </div>
+          <div className="mt-10 text-center">
+            <ButtonLink href="/packages" size="lg">
+              Explore all packages
+            </ButtonLink>
+          </div>
         </div>
       </section>
+
+      <MoodTrips />
+
+      <section className="section-padding bg-brand-50/60">
+        <div className="container-site">
+          <SectionHeading
+            eyebrow={SITE.partner}
+            title="Partner hotels you'll love"
+            titleAccent="love"
+            description="LA Riqueza properties across Uttarakhand and Himachal, Horizon by Shanti in Delhi, and London Castle Kanatal opening soon."
+          />
+          <div className="mt-10 grid gap-8 lg:grid-cols-2">
+            {partnerHotels.map((h) => (
+              <HotelCard
+                key={h.id}
+                name={h.name}
+                slug={h.slug}
+                city={h.city}
+                state={h.state}
+                starRating={h.starRating}
+                shortDescription={h.shortDescription}
+                imageUrl={h.images[0]?.url ?? null}
+                isFeatured={h.isFeatured}
+                guestRating={h.guestRating}
+                startingRate={decimalToNumber(h.startingRate)}
+                amenityNames={h.amenityNames}
+                destinationSlug={h.destination.slug}
+                brandLabel={h.brandLabel}
+                openingSoon={h.openingSoon}
+              />
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <ButtonLink href="/la-riqueza-hotels" variant="outline" size="lg">
+              All LA Riqueza properties
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      {offers.length > 0 ? (
+        <section className="section-padding bg-surface">
+          <div className="container-site">
+            <SectionHeading
+              eyebrow="Don't miss out"
+              title="Grab the offer before it's gone"
+              titleAccent="offer"
+              align="center"
+            />
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {offers.map((o) => (
+                <OfferCard key={o.id} {...o} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section-padding bg-brand-950 text-brand-100">
         <div className="container-site">
           <SectionHeading
             eyebrow="Why us"
-            title="Why Choose Travelling Dreams"
+            title="Why choose Travelling Dreams"
+            titleAccent="Travelling Dreams"
             description="Built for discerning travelers who want clarity, comfort and expert support."
             align="center"
-            className="[&_h2]:text-white [&_p]:text-brand-200"
+            className="[&_h2]:text-white [&_p]:text-brand-200 [&_span]:text-accent-300"
           />
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {TRUST_FEATURES.map((item) => (
               <li
                 key={item.title}
-                className="rounded-2xl border border-brand-800 bg-brand-900/40 p-6"
+                className="rounded-2xl border border-brand-800/80 bg-brand-900/50 p-6 backdrop-blur-sm transition-colors hover:border-accent-500/40"
               >
-                <h3 className="font-display text-xl font-semibold text-white">
-                  {item.title}
-                </h3>
+                <h3 className="text-lg font-bold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-200">
                   {item.description}
                 </p>
@@ -178,61 +252,64 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-padding bg-surface">
-        <div className="container-site">
-          <SectionHeading eyebrow="Deals" title="Special Offers" align="center" />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {offers.map((o) => (
-              <OfferCard key={o.id} {...o} />
-            ))}
+      {blogs.length > 0 ? (
+        <section className="section-padding bg-white">
+          <div className="container-site">
+            <SectionHeading
+              eyebrow="Travel inspiration"
+              title="Picture-perfect ideas"
+              titleAccent="ideas"
+              description="Planning tips for Spiti, Kashmir, Ladakh and more."
+            />
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {blogs.map((b) => (
+                <BlogCard key={b.slug} {...b} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      <section className="section-padding bg-brand-50/40">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow="Travel inspiration"
-            title="Guides & Ideas"
-            description="Planning tips for Spiti, Kashmir, Ladakh and more."
-          />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {blogs.map((b) => (
-              <BlogCard key={b.slug} {...b} />
-            ))}
+      {testimonials.length > 0 ? (
+        <section className="section-padding bg-brand-50/40">
+          <div className="container-site">
+            <SectionHeading
+              eyebrow="Traveller reviews"
+              title="Loved by our guests"
+              titleAccent="guests"
+              align="center"
+            />
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {testimonials.map((t) => (
+                <TestimonialCard key={t.id} {...t} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      <section className="section-padding bg-surface">
-        <div className="container-site">
-          <SectionHeading title="What Travelers Say" align="center" />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <TestimonialCard key={t.id} {...t} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden bg-brand-800 py-20 text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-25" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-accent-900 py-24 text-white">
+        <div
+          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20"
+          aria-hidden
+        />
         <div className="container-site relative text-center">
-          <h2 className="font-display text-3xl font-semibold md:text-4xl text-balance">
-            Plan Your Dream Vacation
+          <h2 className="text-3xl font-bold md:text-5xl text-balance">
+            Plan your dream vacation
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-brand-100">
-            Speak with our travel experts in Uttarakhand, Himachal and Delhi—or start online in minutes.
+          <p className="mx-auto mt-4 max-w-lg text-lg text-brand-100">
+            Speak with our travel experts in Uttarakhand, Himachal and Delhi—or start online in
+            minutes.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <ButtonLink href="/packages" size="lg">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <ButtonLink href="/packages" size="lg" className="min-w-[160px]">
               Explore Packages
             </ButtonLink>
-            <ButtonLink href="/customize-trip" variant="secondary" size="lg">
+            <ButtonLink href="/customize-trip" variant="secondary" size="lg" className="min-w-[160px]">
               Customize My Trip
             </ButtonLink>
             {whatsappUrl !== "#" ? (
-              <ButtonLink href={whatsappUrl} variant="whatsapp" size="lg">
+              <ButtonLink href={whatsappUrl} variant="whatsapp" size="lg" className="min-w-[160px]">
                 Chat on WhatsApp
               </ButtonLink>
             ) : null}

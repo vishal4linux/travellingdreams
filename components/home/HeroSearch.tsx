@@ -50,8 +50,11 @@ export function HeroSearch({ destinations }: Props) {
   const fmt = (d: Date) => d.toISOString().slice(0, 10);
 
   return (
-    <div className="mt-10 w-full max-w-4xl rounded-2xl border border-white/20 bg-white/95 p-4 shadow-[var(--shadow-card)] backdrop-blur-md sm:p-6">
-      <div className="flex gap-1 rounded-xl bg-brand-100/80 p-1">
+    <div className="mt-8 w-full max-w-4xl rounded-2xl border border-white/25 bg-white p-1 shadow-2xl shadow-black/20 sm:mt-10 sm:p-1.5">
+      <p className="px-4 pt-3 text-sm font-medium text-ink-muted sm:px-5">
+        Tell us what you want to experience
+      </p>
+      <div className="mx-2 mt-2 flex gap-1 rounded-xl bg-stone-100 p-1 sm:mx-3">
         {(
           [
             ["hotels", "Hotels"],
@@ -65,7 +68,7 @@ export function HeroSearch({ destinations }: Props) {
             className={cn(
               "flex-1 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
               tab === id
-                ? "bg-white text-brand-900 shadow-sm"
+                ? "bg-white text-ink shadow-sm ring-1 ring-border/80"
                 : "text-ink-muted hover:text-ink"
             )}
           >
@@ -75,7 +78,7 @@ export function HeroSearch({ destinations }: Props) {
       </div>
 
       {tab === "hotels" ? (
-        <form onSubmit={onHotelSubmit} className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <form onSubmit={onHotelSubmit} className="grid gap-4 px-3 pb-4 pt-3 sm:grid-cols-2 sm:px-4 sm:pb-5 lg:grid-cols-3">
           <div className="sm:col-span-2 lg:col-span-3">
             <Label htmlFor="hotel-destination">Destination / Hotel</Label>
             <select
@@ -119,7 +122,7 @@ export function HeroSearch({ destinations }: Props) {
           </div>
         </form>
       ) : (
-        <form onSubmit={onPackageSubmit} className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <form onSubmit={onPackageSubmit} className="grid gap-4 px-3 pb-4 pt-3 sm:grid-cols-2 sm:px-4 sm:pb-5 lg:grid-cols-3">
           <div className="sm:col-span-2">
             <Label htmlFor="pkg-destination">Destination</Label>
             <select

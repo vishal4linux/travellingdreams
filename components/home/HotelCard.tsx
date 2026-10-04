@@ -43,9 +43,15 @@ export function HotelCard({
     "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop";
 
   return (
-    <Card className="flex h-full flex-col overflow-hidden border-border/80 p-0">
+    <Card className="group flex h-full flex-col overflow-hidden border-border/80 p-0 transition-transform duration-300 hover:-translate-y-1">
       <div className="relative aspect-[16/10]">
-        <Image src={image} alt={name} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width:768px) 100vw, 33vw"
+        />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           {openingSoon ? (
             <Badge className="bg-amber-600 text-white">Opening soon</Badge>

@@ -365,14 +365,20 @@ model PackageDestination {
 }
 
 model PackageItinerary {
-  id        String  @id @default(cuid())
-  packageId String
-  package   Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
-  dayNumber Int
-  title     String
-  description String @db.Text
-  meals     String?
-  stay      String?
+  id              String  @id @default(cuid())
+  packageId       String
+  package         Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  dayNumber       Int
+  title           String
+  description     String  @db.Text
+  meals           String?
+  stay            String?
+  locationName    String?
+  latitude        Float?
+  longitude       Float?
+  hotelSlug       String?
+  destinationSlug String?
+  imageUrl        String?
 
   @@unique([packageId, dayNumber])
   @@index([packageId])

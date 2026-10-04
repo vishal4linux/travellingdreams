@@ -28,13 +28,19 @@ export function PackageCard(props: Props) {
   const path = `/packages/${props.destinationSlug}/${props.slug}`;
 
   return (
-    <Card className="flex h-full flex-col overflow-hidden p-0">
+    <Card className="group flex h-full min-w-[300px] flex-col overflow-hidden p-0 transition-transform duration-300 hover:-translate-y-1 sm:min-w-0">
       <div className="relative aspect-[16/10]">
-        <Image src={image} alt={props.title} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
+        <Image
+          src={image}
+          alt={props.title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width:768px) 100vw, 33vw"
+        />
       </div>
-      <CardContent className="flex flex-1 flex-col">
+      <CardContent className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-display text-xl font-semibold text-ink">{props.title}</h3>
+          <h3 className="text-lg font-bold leading-snug text-ink">{props.title}</h3>
           {props.rating != null ? (
             <span className="flex shrink-0 items-center gap-0.5 text-sm font-medium">
               <Star className="h-4 w-4 fill-brand-500 text-brand-500" />
@@ -63,8 +69,9 @@ export function PackageCard(props: Props) {
         <div className="mt-auto flex flex-wrap items-end justify-between gap-3 pt-5">
           <div>
             <p className="text-xs text-ink-subtle">From</p>
-            <p className="font-display text-2xl font-semibold text-brand-800">
+            <p className="text-2xl font-bold text-accent-700">
               {formatINR(props.basePrice)}
+              <span className="text-sm font-normal text-ink-subtle"> / person</span>
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

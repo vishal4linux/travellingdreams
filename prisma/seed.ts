@@ -14,6 +14,7 @@ import {
   OFFERS,
   TESTIMONIALS,
 } from "./seed/demo-data";
+import { itineraryForPackage } from "./seed/package-itineraries";
 import { seedDefaultInventoryForRoomType } from "@/services/room-inventory";
 
 const prisma = new PrismaClient();
@@ -302,16 +303,6 @@ async function seedPackages(destinationIds: Map<string, string>) {
       },
     });
 
-    await prisma.packageImage.deleteMany({ where: { packageId: pkg.id } });
-    await prisma.packageImage.create({
-      data: {
-        packageId: pkg.id,
-        url: p.heroImage,
-        alt: p.title,
-        sortOrder: 0,
-      },
-    });
-
     await prisma.packageDestination.upsert({
       where: {
         packageId_destinationId: {
@@ -334,26 +325,44 @@ async function seedPackages(destinationIds: Map<string, string>) {
     });
 
     await prisma.packageItinerary.deleteMany({ where: { packageId: pkg.id } });
-    await prisma.packageItinerary.createMany({
-      data: [
-        {
-          packageId: pkg.id,
-          dayNumber: 1,
-          title: "Arrival & acclimatization",
-          description: `Arrive in ${p.startingCity ?? "destination"}. Transfer to hotel, briefing with local coordinator and leisure evening.`,
-          meals: "Dinner",
-          stay: "Partner hotel",
-        },
-        {
-          packageId: pkg.id,
-          dayNumber: 2,
-          title: "Sightseeing",
-          description: `Explore key highlights across ${p.placesCovered?.split("·")[0]?.trim() ?? "the region"} with private transport.`,
-          meals: "Breakfast & Dinner",
-          stay: "Partner hotel",
-        },
-      ],
+    const days = itineraryForPackage(p.slug, {
+      startingCity: p.startingCity,
+      placesCovered: p.placesCovered,
+      durationDays: p.durationDays,
     });
+    await prisma.packageItinerary.createMany({
+      data: days.map((day) => ({
+        packageId: pkg.id,
+        dayNumber: day.dayNumber,
+        title: day.title,
+        description: day.description,
+        meals: day.meals,
+        stay: day.stay,
+        locationName: day.locationName,
+        latitude: day.latitude,
+        longitude: day.longitude,
+        hotelSlug: day.hotelSlug,
+        destinationSlug: day.destinationSlug,
+        imageUrl: day.imageUrl,
+      })),
+    });
+
+    const galleryUrls = [
+      p.heroImage,
+      ...days.map((d) => d.imageUrl).filter((u): u is string => Boolean(u)),
+    ];
+    const uniqueGallery = [...new Set(galleryUrls)];
+    await prisma.packageImage.deleteMany({ where: { packageId: pkg.id } });
+    for (let i = 0; i < uniqueGallery.length; i++) {
+      await prisma.packageImage.create({
+        data: {
+          packageId: pkg.id,
+          url: uniqueGallery[i],
+          alt: `${p.title} — photo ${i + 1}`,
+          sortOrder: i,
+        },
+      });
+    }
 
     await prisma.packageFaq.deleteMany({ where: { packageId: pkg.id } });
     await prisma.packageFaq.create({

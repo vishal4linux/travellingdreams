@@ -4,7 +4,7 @@ import { forwardRef, type ButtonHTMLAttributes } from "react";
 
 const variants = {
   primary:
-    "bg-brand-700 text-white hover:bg-brand-800 focus-visible:ring-brand-500 shadow-sm",
+    "bg-accent-600 text-white hover:bg-accent-700 focus-visible:ring-accent-500 shadow-md shadow-accent-600/20",
   secondary:
     "bg-surface-elevated text-ink border border-border hover:border-brand-300 hover:bg-brand-50",
   ghost: "text-ink-muted hover:bg-brand-50 hover:text-ink",

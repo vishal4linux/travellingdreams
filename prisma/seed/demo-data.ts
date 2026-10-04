@@ -168,9 +168,9 @@ export const LA_RIQUEZA_HOTELS: SeedHotel[] = [
     latitude: 30.4199,
     longitude: 78.3436,
     image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
     image2:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop",
     amenities: ["Free Wi-Fi", "Restaurant", "Parking", "Mountain View", "Heating", "Travel Desk"],
     roomName: "Himalayan View Deluxe",
     roomDescription: "Comfortable room with mountain-facing views, in-room heating and breakfast on plan.",
@@ -209,9 +209,9 @@ export const LA_RIQUEZA_HOTELS: SeedHotel[] = [
     latitude: 30.4246,
     longitude: 78.2397,
     image:
-      "https://images.unsplash.com/photo-1504198458649-3128b932f49e?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200&auto=format&fit=crop",
     image2:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop",
     amenities: ["Free Wi-Fi", "Restaurant", "Parking", "Mountain View", "Heating", "Room Service"],
     roomName: "Pine Forest View Room",
     roomDescription: "Warm interiors opening to forest and valley views; ideal for couples and families.",
@@ -414,6 +414,72 @@ export type SeedPackage = {
 };
 
 export const FEATURED_PACKAGES: SeedPackage[] = [
+  {
+    slug: "kanatal-la-riqueza-raunsali-escape",
+    title: "Kanatal Package · LA Riqueza Hotel Raunsali",
+    destinationSlug: "uttarakhand",
+    durationNights: 3,
+    durationDays: 4,
+    startingCity: "Delhi",
+    placesCovered: "Delhi · Kanatal · Mussoorie · Surkanda Devi",
+    hotelCategory: "DELUXE",
+    meals: "Breakfast & Dinner",
+    transport: "Private cab",
+    basePrice: 16499,
+    rating: 4.8,
+    theme: "FAMILY",
+    heroImage:
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+    highlights:
+      "Official LA Riqueza Kanatal package—4-star Raunsali stay, Mussoorie day trip and direct-booking savings.",
+    metaDescription:
+      "Kanatal Uttarakhand package with LA Riqueza Hotel Raunsali—Himalayan views, best rate guarantee.",
+    isFeatured: true,
+  },
+  {
+    slug: "dhanaulti-la-riqueza-view-retreat",
+    title: "Dhanaulti Package · LA Riqueza Dhanolti View",
+    destinationSlug: "uttarakhand",
+    durationNights: 2,
+    durationDays: 3,
+    startingCity: "Delhi",
+    placesCovered: "Delhi · Dhanolti · Eco Park · Surkanda Devi",
+    hotelCategory: "DELUXE",
+    meals: "Breakfast & Dinner",
+    transport: "Private cab",
+    basePrice: 13999,
+    rating: 4.7,
+    theme: "WEEKEND",
+    heroImage:
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200&auto=format&fit=crop",
+    highlights:
+      "Pine-forest retreat on the Mussoorie–Chamba route—partner stay at Hotel Dhanolti View.",
+    metaDescription:
+      "Dhanaulti Uttarakhand package with LA Riqueza Dhanolti View—nature, peace and forest drives.",
+    isFeatured: true,
+  },
+  {
+    slug: "rishikesh-kanatal-spiritual-hills",
+    title: "Rishikesh Uttarakhand Package · Hills & Ganga",
+    destinationSlug: "uttarakhand",
+    durationNights: 4,
+    durationDays: 5,
+    startingCity: "Delhi",
+    placesCovered: "Delhi · Rishikesh · Kanatal · Dhanolti · Mussoorie",
+    hotelCategory: "DELUXE",
+    meals: "Breakfast & Dinner",
+    transport: "Private cab",
+    basePrice: 22499,
+    rating: 4.9,
+    theme: "SPIRITUAL",
+    heroImage:
+      "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    highlights:
+      "Featured combo from LA Riqueza—Ganga aarti, rafting options and Kanatal partner hotel nights.",
+    metaDescription:
+      "Rishikesh Uttarakhand holiday package with Kanatal LA Riqueza stays—spiritual and scenic.",
+    isFeatured: true,
+  },
   {
     slug: "manali-solang-adventure",
     title: "Manali Solang Valley Adventure Package",
