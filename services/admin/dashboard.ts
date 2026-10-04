@@ -1,4 +1,19 @@
 import { prisma } from "@/lib/prisma";
+import type { Decimal } from "@prisma/client/runtime/library";
+
+const emptyStats = {
+  todayBookings: 0,
+  pendingPayments: 0,
+  newEnquiries: 0,
+  totalBookings: 0,
+  hotelRevenue: null as Decimal | null,
+  packageRevenue: null as Decimal | null,
+  upcomingArrivals: 0,
+  upcomingDepartures: 0,
+  popularDestination: "—",
+  occupancy: "—",
+  dbError: true as const,
+};
 
 export async function getAdminDashboardStats() {
   const today = new Date();
@@ -6,6 +21,7 @@ export async function getAdminDashboardStats() {
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
+  try {
   const [
     todayBookings,
     pendingPayments,
@@ -55,5 +71,10 @@ export async function getAdminDashboardStats() {
     upcomingDepartures,
     popularDestination: popularDestination?.name ?? "—",
     occupancy: "—",
+    dbError: false as const,
   };
+  } catch (err) {
+    console.error("admin dashboard stats", err);
+    return emptyStats;
+  }
 }

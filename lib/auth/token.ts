@@ -20,12 +20,12 @@ export function verifySessionPayload<T>(token: string): T | null {
   const expected = createHmac("sha256", sessionSecret()).update(body).digest("base64url");
   try {
     if (!timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
+    const data = JSON.parse(Buffer.from(body, "base64url").toString()) as T & {
+      exp: number;
+    };
+    if (data.exp < Date.now() / 1000) return null;
+    return data;
   } catch {
     return null;
   }
-  const data = JSON.parse(Buffer.from(body, "base64url").toString()) as T & {
-    exp: number;
-  };
-  if (data.exp < Date.now() / 1000) return null;
-  return data;
 }
