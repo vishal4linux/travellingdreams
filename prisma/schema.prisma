@@ -1,5 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  // Binary engine is more stable on Hostinger SSH / shared Linux (avoids library-engine panics).
+  engineType   = "binary"
 }
 
 datasource db {

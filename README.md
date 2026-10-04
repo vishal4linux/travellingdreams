@@ -204,6 +204,16 @@ npm run db:seed
 
 Do **not** run bare `npx prisma` on the server — it may install Prisma 7 and fail. Always use `npm run db:push` / `npm run db:seed` (project uses Prisma 6).
 
+If seed crashes with `timer has gone away` / `PrismaClientRustPanicError`, use the binary engine and the Hostinger script:
+
+```bash
+export PRISMA_CLIENT_ENGINE_TYPE=binary
+export DATABASE_URL='mysql://...'
+npm run db:seed:hostinger
+```
+
+Or seed from your PC: put production `DATABASE_URL` in local `.env` (enable **Remote MySQL** in hPanel), then `npm run db:seed`.
+
 Alternatively, from your PC (temporary), point `DATABASE_URL` in a local `.env` to the **remote** Hostinger MySQL (only if remote MySQL access is enabled in hPanel), then run the same two commands locally.
 
 Default admin after seed: `admin@travellingdreams.in` / `ChangeMe123!` — change immediately.

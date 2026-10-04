@@ -13,11 +13,12 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "tsx prisma/seed.ts",
-    "db:ensure-admin": "tsx prisma/seed-admin.ts",
+    "db:seed": "node --import tsx prisma/seed.ts",
+    "db:seed:hostinger": "bash scripts/seed-hostinger.sh",
+    "db:ensure-admin": "node prisma/seed-admin.mjs",
     "db:setup": "prisma db push && tsx prisma/seed.ts",
     "postinstall": "prisma generate",
-    "postbuild": "npm run db:ensure-admin"
+    "postbuild": "node prisma/seed-admin.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
