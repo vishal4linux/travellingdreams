@@ -151,6 +151,7 @@ model Hotel {
   metaTitle         String?
   metaDescription   String?      @db.Text
   isPublished       Boolean      @default(true)
+  isBookable        Boolean      @default(true)
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
 

@@ -129,6 +129,9 @@ export type SeedHotel = {
   discountedRate?: number;
   attractions: { name: string; distanceKm: number; description?: string }[];
   reviews: { rating: number; title: string; body: string; tripType?: string }[];
+  brandPartner?: string;
+  isLaRiqueza?: boolean;
+  openingSoon?: boolean;
 };
 
 /** Partner properties — aligned with https://lariquezahotels.com/ */
@@ -296,6 +299,84 @@ export const LA_RIQUEZA_HOTELS: SeedHotel[] = [
         tripType: "Family",
       },
     ],
+  },
+  {
+    slug: "horizon-by-shanti-delhi",
+    name: "Horizon by Shanti",
+    destinationSlug: "delhi",
+    city: "New Delhi",
+    state: "Delhi",
+    starRating: 4,
+    isFeatured: true,
+    brandPartner: "Horizon by Shanti",
+    isLaRiqueza: false,
+    guestRating: 4.5,
+    reviewCount: 64,
+    shortDescription:
+      "Contemporary city stay in New Delhi—ideal for business, stopovers and gateway connections across North India.",
+    description:
+      "Horizon by Shanti offers a refined urban hotel experience in New Delhi with comfortable rooms, attentive service and easy access to Janakpuri, the airport corridor and major business districts. Book through Travelling Dreams for transparent rates and trip extensions to Uttarakhand and Himachal partner properties.",
+    policies:
+      "Check-in 2:00 PM · Check-out 11:00 AM\nValid photo ID required.\nAirport and railway transfers on request.\nGST invoices for corporate stays.",
+    latitude: 28.6219,
+    longitude: 77.087,
+    image:
+      "https://images.unsplash.com/photo-1524492412937-b28c165307a4?q=80&w=1200&auto=format&fit=crop",
+    image2:
+      "https://images.unsplash.com/photo-1618773928123-c3d0310f0b8b?q=80&w=1200&auto=format&fit=crop",
+    amenities: ["Free Wi-Fi", "Restaurant", "Air Conditioning", "Parking", "Room Service", "Travel Desk"],
+    roomName: "Horizon Deluxe",
+    roomDescription: "Smart city room with work desk, ensuite bath and daily housekeeping.",
+    baseRate: 4599,
+    discountedRate: 4199,
+    attractions: [
+      { name: "Janakpuri West Metro", distanceKm: 1.2 },
+      { name: "Indira Gandhi International Airport", distanceKm: 14 },
+      { name: "Connaught Place", distanceKm: 18 },
+    ],
+    reviews: [
+      {
+        rating: 5,
+        title: "Solid Delhi base",
+        body: "Clean, quiet rooms and helpful front desk for our early flight.",
+        tripType: "Business",
+      },
+    ],
+  },
+  {
+    slug: "london-castle-by-la-riqueza-kanatal",
+    name: "London Castle by LA Riqueza – Kanatal",
+    destinationSlug: "uttarakhand",
+    city: "Kanatal",
+    state: "Uttarakhand",
+    starRating: 4,
+    isFeatured: true,
+    isLaRiqueza: true,
+    openingSoon: true,
+    guestRating: 0,
+    reviewCount: 0,
+    shortDescription:
+      "Opening soon — a new LA Riqueza hillside retreat in Kanatal, Uttarakhand. Register interest via WhatsApp or enquiry.",
+    description:
+      "London Castle by LA Riqueza is coming soon to Kanatal, Uttarakhand—joining the LA Riqueza portfolio near Mussoorie and Tehri Garhwal. Expect curated mountain hospitality, valley views and the same best-rate direct booking benefits as sister properties Raunsali and Dhanolti View. Online room booking will open closer to launch; contact info@lariquezahotels.com to pre-register groups or weddings.",
+    policies:
+      "Opening soon — bookings not yet live on this portal.\nEnquiries: info@lariquezahotels.com · +91 98109 65967.\nLaunch timelines shared on official LA Riqueza channels.",
+    latitude: 30.415,
+    longitude: 78.338,
+    image:
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+    image2:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
+    amenities: ["Mountain View", "Restaurant", "Parking", "Heating", "Travel Desk"],
+    roomName: "Castle View Suite",
+    roomDescription: "Details announced at launch.",
+    baseRate: 5999,
+    attractions: [
+      { name: "LA Riqueza Hotel Raunsali (Kanatal)", distanceKm: 3, description: "Sister property." },
+      { name: "Mussoorie", distanceKm: 38 },
+      { name: "Surkanda Devi Trek", distanceKm: 10 },
+    ],
+    reviews: [],
   },
 ];
 

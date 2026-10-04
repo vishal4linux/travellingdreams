@@ -1,9 +1,23 @@
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
 import { cache } from "react";
 
-export const getLaRiquezaHotels = cache(async (limit = 4) => {
-  const hotels = await prisma.hotel.findMany({
-    where: { isPublished: true, isLaRiqueza: true },
+function mapPartnerHotelRows(
+  hotels: Awaited<ReturnType<typeof fetchPartnerHotelRows>>
+) {
+  return hotels.map((h) => ({
+    ...h,
+    startingRate: h.roomTypes[0]?.discountedRate ?? h.roomTypes[0]?.baseRate ?? null,
+    mealPlan: h.roomTypes[0]?.mealPlan ?? null,
+    amenityNames: h.amenities.map((a) => a.amenity.name),
+    brandLabel: h.brandPartner ?? "LA Riqueza Hotels",
+    openingSoon: !h.isBookable,
+  }));
+}
+
+async function fetchPartnerHotelRows(where: Prisma.HotelWhereInput, limit: number) {
+  return prisma.hotel.findMany({
+    where: { isPublished: true, AND: where },
     orderBy: [{ isFeatured: "desc" }, { guestRating: "desc" }],
     take: limit,
     include: {
@@ -18,13 +32,22 @@ export const getLaRiquezaHotels = cache(async (limit = 4) => {
       },
     },
   });
+}
 
-  return hotels.map((h) => ({
-    ...h,
-    startingRate: h.roomTypes[0]?.discountedRate ?? h.roomTypes[0]?.baseRate ?? null,
-    mealPlan: h.roomTypes[0]?.mealPlan ?? null,
-    amenityNames: h.amenities.map((a) => a.amenity.name),
-  }));
+export const getLaRiquezaHotels = cache(async (limit = 12) => {
+  const hotels = await fetchPartnerHotelRows({ isLaRiqueza: true }, limit);
+  return mapPartnerHotelRows(hotels);
+});
+
+/** LA Riqueza + associated brands (e.g. Horizon by Shanti) for homepage */
+export const getPartnerHotels = cache(async (limit = 8) => {
+  const hotels = await fetchPartnerHotelRows(
+    {
+      OR: [{ isLaRiqueza: true }, { brandPartner: "Horizon by Shanti" }],
+    },
+    limit
+  );
+  return mapPartnerHotelRows(hotels);
 });
 
 export const getFeaturedPackages = cache(async (limit = 6) => {

@@ -110,14 +110,19 @@ async function seedHotels(destinationIds: Map<string, string>, amenityIds: Map<s
     const destinationId = destinationIds.get(h.destinationSlug);
     if (!destinationId) continue;
 
+    const brandPartner = h.brandPartner ?? "LA Riqueza Hotels";
+    const isLaRiqueza = h.isLaRiqueza ?? true;
+    const isBookable = !h.openingSoon;
+
     const hotel = await prisma.hotel.upsert({
       where: { slug: h.slug },
       create: {
         name: h.name,
         slug: h.slug,
         destinationId,
-        brandPartner: "LA Riqueza Hotels",
-        isLaRiqueza: true,
+        brandPartner,
+        isLaRiqueza,
+        isBookable,
         isFeatured: h.isFeatured,
         propertyType: PropertyType.HOTEL,
         starRating: h.starRating,
@@ -135,6 +140,10 @@ async function seedHotels(destinationIds: Map<string, string>, amenityIds: Map<s
         metaDescription: h.shortDescription,
       },
       update: {
+        name: h.name,
+        brandPartner,
+        isLaRiqueza,
+        isBookable,
         shortDescription: h.shortDescription,
         description: h.description,
         policies: h.policies,
@@ -198,6 +207,11 @@ async function seedHotels(destinationIds: Map<string, string>, amenityIds: Map<s
           data: { hotelId: hotel.id, amenityId },
         });
       }
+    }
+
+    if (h.openingSoon) {
+      await prisma.roomType.deleteMany({ where: { hotelId: hotel.id } });
+      continue;
     }
 
     const roomSlug = "deluxe";

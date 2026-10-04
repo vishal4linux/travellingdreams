@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function LaRiquezaHotelsPage() {
-  const hotels = await getLaRiquezaHotels(12);
+  const hotels = await getLaRiquezaHotels(16);
 
   return (
     <div className="section-padding bg-surface">
@@ -21,7 +21,7 @@ export default async function LaRiquezaHotelsPage() {
         <SectionHeading
           eyebrow="Hospitality partner"
           title="LA Riqueza Hotels"
-          description="Book directly and save—partner properties in Uttarakhand and Himachal Pradesh with best-rate guarantee, exclusive offers and priority support."
+          description="Book directly and save—LA Riqueza in Uttarakhand and Himachal, plus London Castle Kanatal opening soon. Horizon by Shanti Delhi is listed under partner hotels."
         />
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-muted">
           {SITE.partner} is headquartered in New Delhi with over 20 years of hospitality experience.
@@ -47,6 +47,8 @@ export default async function LaRiquezaHotelsPage() {
               startingRate={decimalToNumber(h.startingRate)}
               amenityNames={h.amenityNames}
               destinationSlug={h.destination.slug}
+              brandLabel={h.brandLabel}
+              openingSoon={h.openingSoon}
             />
           ))}
         </div>

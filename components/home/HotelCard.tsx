@@ -18,6 +18,8 @@ type Props = {
   startingRate: number | null;
   amenityNames: string[];
   destinationSlug: string;
+  brandLabel?: string;
+  openingSoon?: boolean;
 };
 
 export function HotelCard({
@@ -33,6 +35,8 @@ export function HotelCard({
   startingRate,
   amenityNames,
   destinationSlug,
+  brandLabel = "LA Riqueza Hotels",
+  openingSoon = false,
 }: Props) {
   const image =
     imageUrl ??
@@ -42,16 +46,19 @@ export function HotelCard({
     <Card className="flex h-full flex-col overflow-hidden border-border/80 p-0">
       <div className="relative aspect-[16/10]">
         <Image src={image} alt={name} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
-        {isFeatured ? (
-          <Badge className="absolute left-3 top-3 bg-brand-700 text-white">Featured</Badge>
-        ) : null}
+        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+          {openingSoon ? (
+            <Badge className="bg-amber-600 text-white">Opening soon</Badge>
+          ) : null}
+          {isFeatured ? (
+            <Badge className="bg-brand-700 text-white">Featured</Badge>
+          ) : null}
+        </div>
       </div>
       <CardContent className="flex flex-1 flex-col">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-brand-600">
-              LA Riqueza Hotels
-            </p>
+            <p className="text-xs font-medium uppercase tracking-wide text-brand-600">{brandLabel}</p>
             <h3 className="mt-1 font-display text-xl font-semibold text-ink">{name}</h3>
             <p className="text-sm text-ink-muted">
               {city}, {state}
@@ -59,7 +66,7 @@ export function HotelCard({
           </div>
           <div className="flex shrink-0 items-center gap-0.5 text-sm font-medium text-ink">
             <Star className="h-4 w-4 fill-brand-500 text-brand-500" />
-            {guestRating?.toFixed(1) ?? starRating}
+            {guestRating && guestRating > 0 ? guestRating.toFixed(1) : starRating}
           </div>
         </div>
         {shortDescription ? (
@@ -76,22 +83,26 @@ export function HotelCard({
         ) : null}
         <div className="mt-auto flex flex-wrap items-end justify-between gap-3 pt-5">
           <div>
-            {startingRate != null ? (
+            {startingRate != null && !openingSoon ? (
               <>
                 <p className="text-xs text-ink-subtle">Rooms from</p>
                 <p className="font-display text-2xl font-semibold text-brand-800">
                   {formatINR(startingRate)}
                 </p>
               </>
+            ) : openingSoon ? (
+              <p className="text-sm font-medium text-amber-900">Rates at launch</p>
             ) : null}
           </div>
           <div className="flex flex-wrap gap-2">
             <ButtonLink href={`/hotels/${destinationSlug}/${slug}`} variant="secondary" size="sm">
               View Hotel
             </ButtonLink>
-            <ButtonLink href={`/hotels/${destinationSlug}/${slug}?book=1`} size="sm">
-              Book Now
-            </ButtonLink>
+            {!openingSoon ? (
+              <ButtonLink href={`/hotels/${destinationSlug}/${slug}?book=1`} size="sm">
+                Book Now
+              </ButtonLink>
+            ) : null}
           </div>
         </div>
       </CardContent>

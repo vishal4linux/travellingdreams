@@ -54,9 +54,10 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
   if (!hotel) notFound();
 
   const anyRoomAvailable =
-    roomAvailability == null
-      ? true
-      : [...roomAvailability.values()].some((a) => a.canBook);
+    hotel.isBookable &&
+    (roomAvailability == null
+      ? hotel.roomTypes.length > 0
+      : [...roomAvailability.values()].some((a) => a.canBook));
 
   const path = hotelDetailPath(destination, slug);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -147,8 +148,11 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
           <div className="mt-6 grid gap-10 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <div className="flex flex-wrap gap-2">
-                {hotel.isLaRiqueza ? (
-                  <Badge className="bg-brand-700 text-white">LA Riqueza Hotels</Badge>
+                {hotel.brandPartner ? (
+                  <Badge className="bg-brand-700 text-white">{hotel.brandPartner}</Badge>
+                ) : null}
+                {!hotel.isBookable ? (
+                  <Badge className="bg-amber-600 text-white">Opening soon</Badge>
                 ) : null}
                 {hotel.isFeatured ? <Badge>Featured</Badge> : null}
                 <Badge className="bg-brand-50 text-brand-800">
@@ -163,7 +167,9 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
               <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
                 <span className="flex items-center gap-1 font-medium">
                   <Star className="h-4 w-4 fill-brand-500 text-brand-500" />
-                  {hotel.guestRating?.toFixed(1) ?? "New"} · {hotel.reviewCount} reviews
+                  {hotel.reviewCount > 0 && hotel.guestRating
+                    ? `${hotel.guestRating.toFixed(1)} · ${hotel.reviewCount} reviews`
+                    : "New property"}
                 </span>
                 <span>{hotel.starRating}-star</span>
                 <span className="flex items-center gap-1 text-ink-muted">
@@ -309,7 +315,11 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
                     {bookContext.rooms ? ` · ${bookContext.rooms} room(s)` : ""}
                   </p>
                 ) : null}
-                {anyRoomAvailable ? (
+                {!hotel.isBookable ? (
+                  <p className="mt-5 text-sm text-amber-900">
+                    Opening soon — enquire on WhatsApp to register interest.
+                  </p>
+                ) : anyRoomAvailable ? (
                   <ButtonLink href={bookHref} className="mt-5 w-full" size="lg">
                     Book now
                   </ButtonLink>
@@ -335,6 +345,7 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
         startingRate={startingRate}
         bookHref={bookHref}
         whatsappHref={whatsappHref}
+        isBookable={hotel.isBookable}
       />
     </>
   );

@@ -15,7 +15,7 @@ import {
   getActiveOffers,
   getActiveTestimonials,
   getFeaturedPackages,
-  getLaRiquezaHotels,
+  getPartnerHotels,
   getPublishedBlogs,
   getSearchDestinations,
 } from "@/services/homepage";
@@ -24,7 +24,7 @@ export default async function HomePage() {
   const [
     destinations,
     searchDestinations,
-    laRiquezaHotels,
+    partnerHotels,
     packages,
     offers,
     blogs,
@@ -32,7 +32,7 @@ export default async function HomePage() {
   ] = await Promise.all([
     getPopularDestinations(),
     getSearchDestinations(),
-    getLaRiquezaHotels(),
+    getPartnerHotels(),
     getFeaturedPackages(),
     getActiveOffers(),
     getPublishedBlogs(),
@@ -85,11 +85,11 @@ export default async function HomePage() {
         <div className="container-site">
           <SectionHeading
             eyebrow={SITE.partner}
-            title="LA Riqueza Hotels"
-            description="Premium partner properties across Uttarakhand and Himachal—with transparent room rates and direct booking."
+            title="Partner Hotels"
+            description="LA Riqueza properties across Uttarakhand and Himachal, Horizon by Shanti in Delhi, and London Castle Kanatal opening soon."
           />
           <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            {laRiquezaHotels.map((h) => (
+            {partnerHotels.map((h) => (
               <HotelCard
                 key={h.id}
                 name={h.name}
@@ -104,6 +104,8 @@ export default async function HomePage() {
                 startingRate={decimalToNumber(h.startingRate)}
                 amenityNames={h.amenityNames}
                 destinationSlug={h.destination.slug}
+                brandLabel={h.brandLabel}
+                openingSoon={h.openingSoon}
               />
             ))}
           </div>

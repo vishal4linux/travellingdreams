@@ -19,6 +19,12 @@ export const LA_RIQUEZA_PROPERTY_NAMES = [
   "LA Riqueza Hotel Dhanolti View – Dhanolti",
   "LA Riqueza Hotel Koala Inn Mcleodganj – Dharamshala",
   "LA Riqueza Hotel Galleu Hill Resort – Kufri, Shimla",
+  "London Castle by LA Riqueza – Kanatal (opening soon)",
+] as const;
+
+export const ASSOCIATED_PROPERTY_NAMES = [
+  ...LA_RIQUEZA_PROPERTY_NAMES,
+  "Horizon by Shanti – New Delhi",
 ] as const;
 
 export const NAV_LINKS = [
