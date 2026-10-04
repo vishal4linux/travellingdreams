@@ -140,21 +140,82 @@ Never commit `.env` to Git.
 
 ---
 
-## Deploying on Hostinger
+## Deploying on Hostinger (GitHub connected)
 
-1. Create a **Web App** (Node.js / Next.js) and a **MySQL** database in hPanel.
-2. Connect this repository or upload the project.
-3. Set environment variables in the panel (especially `DATABASE_URL`, secrets, `NEXT_PUBLIC_SITE_URL`).
-4. Build command: `npm run build`  
-   Start command: `npm run start`
-5. Run migrations/seed once against production DB (SSH or Hostinger terminal):
+Use **Websites → Add Website → Node.js web app → Import Git Repository** — not plain `public_html` PHP hosting. Docs: [Hostinger Node.js + GitHub](https://docs.hostinger.com/node.js/github).
+
+### 1. MySQL database (hPanel)
+
+1. **Databases → MySQL** → create database and user.
+2. Note **host**, **database name**, **username**, **password** (host is often not `localhost` on shared hosting).
+3. Build `DATABASE_URL`:
+
+```text
+mysql://USER:PASSWORD@HOST:3306/DATABASE_NAME
+```
+
+If the password has special characters, URL-encode them.
+
+### 2. GitHub deploy settings
+
+| Setting | Value |
+|---------|--------|
+| Repository | `vishal4linux/travellingdreams` |
+| Branch | `main` |
+| Root directory | `/` (repo root) |
+| Framework | Next.js (auto) |
+| Node.js | **20** |
+| Install | `npm install` (or `npm ci` if `package-lock.json` exists) |
+| Build command | `npm run build` |
+| Output directory | `.next` |
+| Start command | `npm run start -- -p $PORT` |
+
+Hostinger sets `$PORT` for your app. Do **not** upload this site only to `public_html` without the Node build.
+
+### 3. Environment variables (Hostinger app → Environment)
+
+Set these before or after first deploy:
+
+```env
+DATABASE_URL=mysql://...
+SESSION_SECRET=long-random-string
+NEXTAUTH_SECRET=same-or-another-long-random-string
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+NEXT_PUBLIC_SITE_NAME=Travelling Dreams
+NEXT_PUBLIC_WHATSAPP_NUMBER=919810965967
+WHATSAPP_NUMBER=919810965967
+ALLOW_MOCK_PAYMENT=0
+```
+
+Add Razorpay keys when going live. Use strong secrets in production.
+
+### 4. Create tables and seed (once)
+
+After the first successful deploy, open **SSH** or Hostinger’s **terminal** in the app directory and run:
 
 ```bash
 npx prisma db push
 npm run db:seed
 ```
 
-6. Point your domain to the Web App and configure Razorpay webhooks to `/api/payments/webhook`.
+Alternatively, from your PC (temporary), point `DATABASE_URL` in a local `.env` to the **remote** Hostinger MySQL (only if remote MySQL access is enabled in hPanel), then run the same two commands locally.
+
+Default admin after seed: `admin@travellingdreams.in` / `ChangeMe123!` — change immediately.
+
+### 5. Domain
+
+Attach your domain to the **Node.js web app** in hPanel. Set `NEXT_PUBLIC_SITE_URL` to that exact URL (with `https`).
+
+### 6. Troubleshooting
+
+| Issue | Fix |
+|--------|-----|
+| Build fails on Prisma | Ensure deploy logs show `prisma generate` during `npm run build`; redeploy after latest `main`. |
+| Site loads but DB errors | Check `DATABASE_URL`, run `npx prisma db push`. |
+| 502 / app not running | Start command must include `-p $PORT`. Check deployment logs. |
+| Images broken | Unsplash URLs are allowed in `next.config.ts`; no extra step needed. |
+
+Razorpay webhook URL: `https://yourdomain.com/api/payments/webhook`
 
 ---
 

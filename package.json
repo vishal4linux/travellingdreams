@@ -2,6 +2,9 @@
   "name": "travelling-dreams",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
@@ -25,7 +28,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "prisma": "^6.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -36,7 +40,6 @@
     "@types/react-dom": "^19.0.4",
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.2.4",
-    "prisma": "^6.5.0",
     "tailwindcss": "^4.0.17",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
