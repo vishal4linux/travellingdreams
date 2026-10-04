@@ -13,9 +13,9 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "prisma db seed",
+    "db:seed": "tsx prisma/seed.ts",
     "db:ensure-admin": "tsx prisma/seed-admin.ts",
-    "db:setup": "prisma db push && npm run db:seed",
+    "db:setup": "prisma db push && tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "postbuild": "npm run db:ensure-admin"
   },
@@ -23,7 +23,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "6.5.0",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "lucide-react": "^0.484.0",
@@ -32,7 +32,8 @@
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
     "zod": "^3.24.2",
-    "prisma": "^6.5.0"
+    "prisma": "6.5.0",
+    "tsx": "^4.19.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -44,7 +45,6 @@
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.2.4",
     "tailwindcss": "^4.0.17",
-    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   }
 }

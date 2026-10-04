@@ -191,12 +191,18 @@ Add Razorpay keys when going live. Use strong secrets in production.
 
 ### 4. Create tables and seed (once)
 
-After the first successful deploy, open **SSH** or Hostinger’s **terminal** in the app directory and run:
+After the first successful deploy, open **SSH**, `cd` to the Node build folder (often `~/domains/YOUR-SITE/hbuilds/last-source`), enable Node in PATH, then run:
 
 ```bash
-npx prisma db push
+export PATH=/opt/alt/alt-nodejs20/root/usr/bin:$PATH
+cd ~/domains/YOUR-SITE/hbuilds/last-source
+export DATABASE_URL='mysql://USER:PASSWORD@localhost:3306/DATABASE'
+npm install
+npm run db:push
 npm run db:seed
 ```
+
+Do **not** run bare `npx prisma` on the server — it may install Prisma 7 and fail. Always use `npm run db:push` / `npm run db:seed` (project uses Prisma 6).
 
 Alternatively, from your PC (temporary), point `DATABASE_URL` in a local `.env` to the **remote** Hostinger MySQL (only if remote MySQL access is enabled in hPanel), then run the same two commands locally.
 
