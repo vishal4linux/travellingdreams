@@ -21,11 +21,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 400 });
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email },
-    include: { role: true },
-  });
-  if (!user?.isActive) {
+  let user;
+  try {
+    user = await prisma.user.findUnique({
+      where: { email: parsed.data.email },
+      include: { role: true },
+    });
+  } catch (err) {
+    console.error("admin login db error", err);
+    return NextResponse.json(
+      {
+        error:
+          "Database is not ready. On the server run: npx prisma db push && npm run db:ensure-admin",
+      },
+      { status: 503 }
+    );
+  }
+
+  if (!user?.isActive || !user.role) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
   }
 

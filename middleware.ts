@@ -1,5 +1,12 @@
+import { verifySessionPayload } from "@/lib/auth/token";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
+function isValidAdminSession(token: string | undefined): boolean {
+  if (!token) return false;
+  const data = verifySessionPayload<{ kind: string }>(token);
+  return data?.kind === "admin";
+}
 
 const ADMIN_PUBLIC = ["/admin/login"];
 
@@ -13,7 +20,7 @@ export function middleware(request: NextRequest) {
 
   if (pathname.startsWith("/admin") && !ADMIN_PUBLIC.some((p) => pathname.startsWith(p))) {
     const token = request.cookies.get("td_admin_session")?.value;
-    if (!token) {
+    if (!isValidAdminSession(token)) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
   }

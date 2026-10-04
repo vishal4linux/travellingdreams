@@ -7,14 +7,17 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
-    "postinstall": "prisma generate"
+    "db:ensure-admin": "tsx prisma/seed-admin.ts",
+    "db:setup": "prisma db push && npm run db:seed",
+    "postinstall": "prisma generate",
+    "postbuild": "npm run db:ensure-admin"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

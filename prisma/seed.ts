@@ -37,15 +37,21 @@ async function seedRolesAndAdmin() {
   const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@travellingdreams.in";
   const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe123!";
 
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
   await prisma.user.upsert({
     where: { email: adminEmail },
     create: {
       email: adminEmail,
       name: "Travelling Dreams Admin",
-      passwordHash: await bcrypt.hash(adminPassword, 12),
+      passwordHash,
       roleId: adminRole.id,
+      isActive: true,
     },
-    update: {},
+    update: {
+      passwordHash,
+      roleId: adminRole.id,
+      isActive: true,
+    },
   });
 }
 

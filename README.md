@@ -212,6 +212,7 @@ Attach your domain to the **Node.js web app** in hPanel. Set `NEXT_PUBLIC_SITE_U
 |--------|-----|
 | Build fails on Prisma | Ensure deploy logs show `prisma generate` during `npm run build`; redeploy after latest `main`. |
 | Site loads but DB errors | Check `DATABASE_URL`, run `npx prisma db push`. |
+| Admin login fails / 500 | Redeploy (build runs `db push` + creates admin), or SSH: `npm run db:ensure-admin`. Use `admin@travellingdreams.in` / `ChangeMe123!` after seed. |
 | 502 / app not running | Start command must include `-p $PORT`. Check deployment logs. |
 | Images broken | Unsplash URLs are allowed in `next.config.ts`; no extra step needed. |
 

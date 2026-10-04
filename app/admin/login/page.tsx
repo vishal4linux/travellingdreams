@@ -2,32 +2,42 @@
 
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     const fd = new FormData(e.currentTarget);
-    const res = await fetch("/api/auth/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: fd.get("email"),
-        password: fd.get("password"),
-      }),
-    });
-    const data = await res.json();
+    let res: Response;
+    try {
+      res = await fetch("/api/auth/admin/login", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: fd.get("email"),
+          password: fd.get("password"),
+        }),
+      });
+    } catch {
+      setError("Network error. Try again.");
+      return;
+    }
+    let data: { error?: string } = {};
+    try {
+      data = await res.json();
+    } catch {
+      setError(res.ok ? "Unexpected response from server." : `Login failed (${res.status}).`);
+      return;
+    }
     if (!res.ok) {
       setError(data.error ?? "Login failed");
       return;
     }
-    router.push("/admin");
-    router.refresh();
+    window.location.assign("/admin");
   }
 
   return (
