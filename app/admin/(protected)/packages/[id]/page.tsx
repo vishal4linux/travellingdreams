@@ -1,11 +1,8 @@
-import { DeleteButton } from "@/components/admin/DeleteButton";
-import { ImageManager } from "@/components/admin/ImageManager";
-import { ItineraryEditor } from "@/components/admin/ItineraryEditor";
-import { PackageEditor } from "@/components/admin/PackageEditor";
+import { PackageStudio } from "@/components/admin/PackageStudio";
 import { requireAdmin } from "@/lib/auth/rbac";
+import { formatINR } from "@/lib/utils";
 import { decimalToNumber } from "@/lib/serialize";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 type Props = { params: Promise<{ id: string }> };
@@ -25,6 +22,7 @@ export default async function EditPackagePage({ params }: Props) {
         destinations: { include: { destination: true }, orderBy: { sortOrder: "asc" } },
         images: { orderBy: { sortOrder: "asc" } },
         itinerary: { orderBy: { dayNumber: "asc" } },
+        attractions: { orderBy: [{ sortOrder: "asc" }, { name: "asc" }] },
       },
     }),
     prisma.destination.findMany({
@@ -35,67 +33,46 @@ export default async function EditPackagePage({ params }: Props) {
   if (!pkg) notFound();
 
   const primaryDest = pkg.destinations[0]?.destination;
+  const price = decimalToNumber(pkg.basePrice) ?? 0;
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <Link href="/admin/packages" className="text-sm text-brand-700 hover:underline">
-            ← Packages
-          </Link>
-          <h1 className="mt-3 font-display text-3xl font-semibold">{pkg.title}</h1>
-          {primaryDest ? (
-            <p className="mt-1 text-sm text-stone-600">
-              Public:{" "}
-              <Link
-                href={`/packages/${primaryDest.slug}/${pkg.slug}`}
-                className="text-brand-700 hover:underline"
-                target="_blank"
-              >
-                /packages/{primaryDest.slug}/{pkg.slug}
-              </Link>
-            </p>
-          ) : null}
-        </div>
-        <DeleteButton
-          url={`/api/admin/packages/${pkg.id}`}
-          redirectTo="/admin/packages"
-          confirmMessage={`Delete "${pkg.title}" permanently?`}
-        />
-      </div>
-
-      <PackageEditor
-        destinations={destinations}
-        initial={{
-          id: pkg.id,
-          title: pkg.title,
-          slug: pkg.slug,
-          destinationId: primaryDest?.id ?? "",
-          durationNights: pkg.durationNights,
-          durationDays: pkg.durationDays,
-          startingCity: pkg.startingCity,
-          placesCovered: pkg.placesCovered,
-          meals: pkg.meals,
-          transport: pkg.transport,
-          highlights: pkg.highlights,
-          description: pkg.description,
-          inclusions: pkg.inclusions,
-          exclusions: pkg.exclusions,
-          basePrice: decimalToNumber(pkg.basePrice) ?? 0,
-          theme: pkg.theme,
-          heroImage: pkg.heroImage,
-          isPublished: pkg.isPublished,
-          isFeatured: pkg.isFeatured,
-        }}
-      />
-
-      <ImageManager
-        label="Package gallery"
-        images={pkg.images}
-        uploadUrl={`/api/admin/packages/${pkg.id}/images`}
-      />
-
-      <ItineraryEditor packageId={pkg.id} days={pkg.itinerary} />
-    </div>
+    <PackageStudio
+      packageId={pkg.id}
+      title={pkg.title}
+      publicPath={
+        primaryDest ? `/packages/${primaryDest.slug}/${pkg.slug}` : null
+      }
+      priceLabel={`${formatINR(price)} · ${pkg.durationNights}N / ${pkg.durationDays}D`}
+      isPublished={pkg.isPublished}
+      isFeatured={pkg.isFeatured}
+      imageCount={pkg.images.length}
+      dayCount={pkg.itinerary.length}
+      placeCount={pkg.attractions.length}
+      destinations={destinations}
+      editorInitial={{
+        id: pkg.id,
+        title: pkg.title,
+        slug: pkg.slug,
+        destinationId: primaryDest?.id ?? "",
+        durationNights: pkg.durationNights,
+        durationDays: pkg.durationDays,
+        startingCity: pkg.startingCity,
+        placesCovered: pkg.placesCovered,
+        meals: pkg.meals,
+        transport: pkg.transport,
+        highlights: pkg.highlights,
+        description: pkg.description,
+        inclusions: pkg.inclusions,
+        exclusions: pkg.exclusions,
+        basePrice: price,
+        theme: pkg.theme,
+        heroImage: pkg.heroImage,
+        isPublished: pkg.isPublished,
+        isFeatured: pkg.isFeatured,
+      }}
+      images={pkg.images}
+      itineraryDays={pkg.itinerary}
+      attractions={pkg.attractions}
+    />
   );
 }

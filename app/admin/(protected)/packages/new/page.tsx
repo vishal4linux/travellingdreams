@@ -17,14 +17,20 @@ export default async function NewPackagePage() {
   });
 
   return (
-    <div>
-      <Link href="/admin/packages" className="text-sm text-brand-700 hover:underline">
-        ← Packages
-      </Link>
-      <h1 className="mt-3 font-display text-3xl font-semibold">Add package</h1>
-      <div className="mt-6">
-        <PackageEditor destinations={destinations} />
+    <div className="space-y-6">
+      <div>
+        <Link href="/admin/packages" className="text-sm font-medium text-brand-700 hover:underline">
+          ← Package studio
+        </Link>
+        <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight">
+          Create a package
+        </h1>
+        <p className="mt-2 max-w-xl text-sm text-stone-600">
+          Start with the basics. After save you&apos;ll unlock gallery, day itinerary and the
+          interactive map places editor.
+        </p>
       </div>
+      <PackageEditor destinations={destinations} />
     </div>
   );
 }

@@ -8,11 +8,13 @@ export function DeleteButton({
   redirectTo,
   label = "Delete",
   confirmMessage = "Delete permanently?",
+  className,
 }: {
   url: string;
   redirectTo?: string;
   label?: string;
   confirmMessage?: string;
+  className?: string;
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -21,7 +23,10 @@ export function DeleteButton({
     <button
       type="button"
       disabled={busy}
-      className="rounded-lg border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-50"
+      className={
+        className ??
+        "rounded-lg border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-50"
+      }
       onClick={async () => {
         if (!confirm(confirmMessage)) return;
         setBusy(true);

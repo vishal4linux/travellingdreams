@@ -81,6 +81,7 @@ export async function getPackageDetail(destinationSlug: string, packageSlug: str
       images: { orderBy: { sortOrder: "asc" } },
       destinations: { include: { destination: true }, orderBy: { sortOrder: "asc" } },
       itinerary: { orderBy: { dayNumber: "asc" } },
+      attractions: { orderBy: [{ sortOrder: "asc" }, { name: "asc" }] },
       faqs: { orderBy: { sortOrder: "asc" } },
       dates: { where: { startDate: { gte: new Date() } }, orderBy: { startDate: "asc" }, take: 12 },
       prices: { orderBy: { adultPrice: "asc" }, take: 1 },

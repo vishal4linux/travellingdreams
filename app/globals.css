@@ -89,4 +89,29 @@
       radial-gradient(at 80% 0%, rgb(180 83 9 / 0.2) 0, transparent 45%),
       radial-gradient(at 0% 50%, rgb(47 28 22 / 0.9) 0, transparent 55%);
   }
+
+  .animate-map-dash {
+    animation: map-dash 18s linear infinite;
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.35s ease-out;
+  }
+}
+
+@keyframes map-dash {
+  to {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

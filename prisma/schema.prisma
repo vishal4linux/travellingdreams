@@ -334,6 +334,7 @@ model Package {
   images       PackageImage[]
   destinations PackageDestination[]
   itinerary    PackageItinerary[]
+  attractions  PackageAttraction[]
   dates        PackageDepartureDate[]
   prices       PackagePrice[]
   faqs         PackageFaq[]
@@ -379,9 +380,32 @@ model PackageItinerary {
   hotelSlug       String?
   destinationSlug String?
   imageUrl        String?
+  /// JSON: [{ name, whyVisit, tip, category }]
+  attractionsJson String? @db.Text
 
   @@unique([packageId, dayNumber])
   @@index([packageId])
+}
+
+/// Clickable map stops — famous places & must-visits for a package
+model PackageAttraction {
+  id          String   @id @default(cuid())
+  packageId   String
+  package     Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  dayNumber   Int?
+  name        String
+  tagline     String?
+  description String?  @db.Text
+  whyVisit    String?  @db.Text
+  category    String   @default("sightseeing")
+  latitude    Float?
+  longitude   Float?
+  imageUrl    String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([packageId, sortOrder])
+  @@index([packageId, dayNumber])
 }
 
 model PackageDepartureDate {

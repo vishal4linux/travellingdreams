@@ -15,6 +15,7 @@ import {
   TESTIMONIALS,
 } from "./seed/demo-data";
 import { itineraryForPackage } from "./seed/package-itineraries";
+import { PACKAGE_ATTRACTIONS } from "./seed/package-attractions";
 import { seedDefaultInventoryForRoomType } from "@/services/room-inventory";
 
 const prisma = new PrismaClient();
@@ -407,6 +408,34 @@ async function seedPackages(destinationIds: Map<string, string>) {
   }
 }
 
+async function seedPackageAttractions() {
+  for (const a of PACKAGE_ATTRACTIONS) {
+    const pkg = await prisma.package.findUnique({ where: { slug: a.packageSlug } });
+    if (!pkg) continue;
+    const existing = await prisma.packageAttraction.findFirst({
+      where: { packageId: pkg.id, name: a.name },
+    });
+    const data = {
+      dayNumber: a.dayNumber ?? null,
+      tagline: a.tagline ?? null,
+      description: a.description ?? null,
+      whyVisit: a.whyVisit ?? null,
+      category: a.category,
+      latitude: a.latitude,
+      longitude: a.longitude,
+      imageUrl: a.imageUrl ?? null,
+      sortOrder: a.sortOrder ?? 0,
+    };
+    if (existing) {
+      await prisma.packageAttraction.update({ where: { id: existing.id }, data });
+    } else {
+      await prisma.packageAttraction.create({
+        data: { packageId: pkg.id, name: a.name, ...data },
+      });
+    }
+  }
+}
+
 async function seedCoupons() {
   await prisma.coupon.upsert({
     where: { code: "WELCOME10" },
@@ -511,6 +540,7 @@ async function main() {
   const amenityIds = await seedAmenities();
   await seedHotels(destinationIds, amenityIds);
   await seedPackages(destinationIds);
+  await seedPackageAttractions();
   await seedOffers();
   await seedCoupons();
   await seedTestimonials();

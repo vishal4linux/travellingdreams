@@ -88,7 +88,18 @@ export function PackageEditor({
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-stone-200 bg-white p-6">
+    <form
+      onSubmit={onSubmit}
+      className="space-y-5 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm"
+    >
+      <div>
+        <h2 className="text-xl font-bold text-ink">
+          {isEdit ? "Package details" : "Create a new package"}
+        </h2>
+        <p className="mt-1 text-sm text-stone-600">
+          Pricing, story copy and publish settings travellers see on the site.
+        </p>
+      </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Label htmlFor="title">Package title</Label>

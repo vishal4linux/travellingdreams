@@ -13,6 +13,8 @@ type Day = {
   meals?: string | null;
   stay?: string | null;
   locationName?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   imageUrl?: string | null;
 };
 
@@ -33,6 +35,8 @@ export function ItineraryEditor({ packageId, days }: { packageId: string; days: 
       meals: String(fd.get("meals") ?? "") || null,
       stay: String(fd.get("stay") ?? "") || null,
       locationName: String(fd.get("locationName") ?? "") || null,
+      latitude: fd.get("latitude") ? Number(fd.get("latitude")) : null,
+      longitude: fd.get("longitude") ? Number(fd.get("longitude")) : null,
       imageUrl: String(fd.get("imageUrl") ?? "") || null,
     };
     try {
@@ -71,22 +75,42 @@ export function ItineraryEditor({ packageId, days }: { packageId: string; days: 
   const nextDay = (days.reduce((m, d) => Math.max(m, d.dayNumber), 0) || 0) + 1;
 
   return (
-    <section className="rounded-xl border border-stone-200 bg-white p-5">
-      <h2 className="font-display text-xl font-semibold">Itinerary</h2>
-      {error ? <p className="mt-2 text-sm text-red-600">{error}</p> : null}
+    <section className="space-y-6">
+      <div>
+        <h2 className="text-xl font-bold text-ink">Day-by-day itinerary</h2>
+        <p className="mt-1 text-sm text-stone-600">
+          Add overnight coordinates so the public journey map can draw the route between stays.
+        </p>
+      </div>
 
-      <ol className="mt-4 space-y-3">
+      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+
+      <ol className="space-y-3">
         {days.map((d) => (
-          <li key={d.id} className="rounded-lg border border-stone-100 p-3">
+          <li
+            key={d.id}
+            className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm"
+          >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-medium">
+                <p className="font-semibold text-ink">
                   Day {d.dayNumber}: {d.title}
                 </p>
                 <p className="mt-1 text-sm text-stone-600">{d.description}</p>
-                {d.locationName ? (
-                  <p className="mt-1 text-xs text-stone-500">📍 {d.locationName}</p>
-                ) : null}
+                <div className="mt-2 flex flex-wrap gap-2 text-xs text-stone-500">
+                  {d.locationName ? <span>📍 {d.locationName}</span> : null}
+                  {d.latitude != null && d.longitude != null ? (
+                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-emerald-700">
+                      on map
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-amber-50 px-2 py-0.5 text-amber-700">
+                      add lat/lng
+                    </span>
+                  )}
+                  {d.meals ? <span>🍽 {d.meals}</span> : null}
+                  {d.stay ? <span>🛏 {d.stay}</span> : null}
+                </div>
               </div>
               <button
                 type="button"
@@ -101,14 +125,26 @@ export function ItineraryEditor({ packageId, days }: { packageId: string; days: 
         ))}
       </ol>
 
-      <form onSubmit={addDay} className="mt-6 grid gap-3 border-t border-stone-100 pt-4 sm:grid-cols-2">
+      <form
+        onSubmit={addDay}
+        className="grid gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-5 sm:grid-cols-2"
+      >
+        <p className="sm:col-span-2 text-sm font-semibold text-ink">Add or update a day</p>
         <div>
           <Label htmlFor="dayNumber">Day #</Label>
-          <Input id="dayNumber" name="dayNumber" type="number" min={1} defaultValue={nextDay} required className="mt-1" />
+          <Input
+            id="dayNumber"
+            name="dayNumber"
+            type="number"
+            min={1}
+            defaultValue={nextDay}
+            required
+            className="mt-1"
+          />
         </div>
         <div>
-          <Label htmlFor="locationName">Location name</Label>
-          <Input id="locationName" name="locationName" className="mt-1" />
+          <Label htmlFor="locationName">Overnight / city</Label>
+          <Input id="locationName" name="locationName" className="mt-1" placeholder="Mussoorie" />
         </div>
         <div className="sm:col-span-2">
           <Label htmlFor="title">Title</Label>
@@ -121,12 +157,34 @@ export function ItineraryEditor({ packageId, days }: { packageId: string; days: 
             name="description"
             required
             rows={3}
-            className="mt-1 w-full rounded-xl border border-stone-200 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm"
+          />
+        </div>
+        <div>
+          <Label htmlFor="latitude">Latitude</Label>
+          <Input
+            id="latitude"
+            name="latitude"
+            type="number"
+            step="any"
+            className="mt-1"
+            placeholder="30.4598"
+          />
+        </div>
+        <div>
+          <Label htmlFor="longitude">Longitude</Label>
+          <Input
+            id="longitude"
+            name="longitude"
+            type="number"
+            step="any"
+            className="mt-1"
+            placeholder="78.0664"
           />
         </div>
         <div>
           <Label htmlFor="meals">Meals</Label>
-          <Input id="meals" name="meals" className="mt-1" />
+          <Input id="meals" name="meals" className="mt-1" placeholder="Breakfast, Dinner" />
         </div>
         <div>
           <Label htmlFor="stay">Stay</Label>
@@ -138,7 +196,7 @@ export function ItineraryEditor({ packageId, days }: { packageId: string; days: 
         </div>
         <div className="sm:col-span-2">
           <Button type="submit" disabled={busy}>
-            Add / update day
+            {busy ? "Saving…" : "Add / update day"}
           </Button>
         </div>
       </form>

@@ -1,4 +1,5 @@
 import { PackageItineraryExplorer } from "@/components/packages/PackageItineraryExplorer";
+import { PackageJourneyMap } from "@/components/packages/PackageJourneyMap";
 import { PackageJsonLd } from "@/components/packages/PackageJsonLd";
 import { PackageMobileBar } from "@/components/packages/PackageMobileBar";
 import { PackagePhotoGallery } from "@/components/packages/PackagePhotoGallery";
@@ -75,11 +76,50 @@ export default async function PackageDetailPage({ params }: Props) {
               </section>
             ) : null}
             <PackagePhotoGallery images={pkg.images} title={pkg.title} />
+
+            {pkg.attractions.length || pkg.itinerary.some((d) => d.latitude != null) ? (
+              <section>
+                <h2 className="text-2xl font-bold tracking-tight text-ink">
+                  Explore the journey
+                </h2>
+                <p className="mt-2 text-ink-muted">
+                  Click any pin to learn why that place is famous — viewpoints, temples, food
+                  stops and must-visits on this tour.
+                </p>
+                <div className="mt-6">
+                  <PackageJourneyMap
+                    packageTitle={pkg.title}
+                    places={pkg.attractions
+                      .filter((a) => a.latitude != null && a.longitude != null)
+                      .map((a) => ({
+                        id: a.id,
+                        name: a.name,
+                        tagline: a.tagline,
+                        whyVisit: a.whyVisit,
+                        description: a.description,
+                        category: a.category,
+                        dayNumber: a.dayNumber,
+                        latitude: a.latitude as number,
+                        longitude: a.longitude as number,
+                        imageUrl: a.imageUrl,
+                      }))}
+                    days={pkg.itinerary.map((d) => ({
+                      dayNumber: d.dayNumber,
+                      title: d.title,
+                      locationName: d.locationName,
+                      latitude: d.latitude,
+                      longitude: d.longitude,
+                    }))}
+                  />
+                </div>
+              </section>
+            ) : null}
+
             {pkg.itinerary.length ? (
               <section>
-                <h2 className="text-2xl font-bold tracking-tight text-ink">Interactive itinerary</h2>
+                <h2 className="text-2xl font-bold tracking-tight text-ink">Day-by-day itinerary</h2>
                 <p className="mt-2 text-ink-muted">
-                  Tap each day to preview photos, partner hotel stays and open locations on the map.
+                  Tap each day for photos, meals, partner stays and open locations on Maps.
                 </p>
                 <div className="mt-6">
                   <PackageItineraryExplorer days={pkg.itinerary} packageTitle={pkg.title} />
