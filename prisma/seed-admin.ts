@@ -23,23 +23,29 @@ async function main() {
   const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe123!";
   const passwordHash = await bcrypt.hash(adminPassword, 12);
 
-  await prisma.user.upsert({
-    where: { email: adminEmail },
-    create: {
-      email: adminEmail,
-      name: "Travelling Dreams Admin",
-      passwordHash,
-      roleId: adminRole.id,
-      isActive: true,
-    },
-    update: {
-      passwordHash,
-      roleId: adminRole.id,
-      isActive: true,
-    },
-  });
-
-  console.log(`Admin ready: ${adminEmail}`);
+  const existing = await prisma.user.findUnique({ where: { email: adminEmail } });
+  if (existing) {
+    await prisma.user.update({
+      where: { email: adminEmail },
+      data: {
+        roleId: adminRole.id,
+        isActive: true,
+        ...(process.env.SEED_ADMIN_RESET_PASSWORD === "1" ? { passwordHash } : {}),
+      },
+    });
+    console.log(`Admin exists: ${adminEmail}`);
+  } else {
+    await prisma.user.create({
+      data: {
+        email: adminEmail,
+        name: "Travelling Dreams Admin",
+        passwordHash,
+        roleId: adminRole.id,
+        isActive: true,
+      },
+    });
+    console.log(`Admin created: ${adminEmail}`);
+  }
 }
 
 main()

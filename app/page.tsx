@@ -14,6 +14,7 @@ import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ButtonLink } from "@/components/ui/button";
 import { TRUST_FEATURES, SITE } from "@/lib/constants/site";
 import { decimalToNumber } from "@/lib/serialize";
+import { getSiteSettings, setting } from "@/lib/site-settings";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { getPopularDestinations } from "@/services/destinations";
 import {
@@ -34,6 +35,7 @@ export default async function HomePage() {
     offers,
     blogs,
     testimonials,
+    siteSettings,
   ] = await Promise.all([
     getPopularDestinations(),
     getSearchDestinations(),
@@ -42,9 +44,20 @@ export default async function HomePage() {
     getActiveOffers(),
     getPublishedBlogs(),
     getActiveTestimonials(),
+    getSiteSettings(),
   ]);
 
-  const whatsappUrl = buildWhatsAppUrl();
+  const heroTitle = setting(siteSettings, "homepage_hero_title", "Experience India, Better");
+  const heroSubtitle = setting(siteSettings, "homepage_hero_subtitle", SITE.tagline);
+  const partnerTagline = setting(
+    siteSettings,
+    "homepage_partner_tagline",
+    SITE.partnerTagline
+  );
+  const waNumber = setting(siteSettings, "whatsapp_number", "");
+  const whatsappUrl = waNumber
+    ? buildWhatsAppUrl(undefined, waNumber)
+    : buildWhatsAppUrl();
 
   return (
     <div>
@@ -57,13 +70,19 @@ export default async function HomePage() {
         <div className="hero-mesh absolute inset-0" aria-hidden />
         <div className="container-site relative flex min-h-[88vh] flex-col justify-center pb-28 pt-10 md:pb-32 md:pt-14">
           <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-100 backdrop-blur-sm">
-            {SITE.partnerTagline}
+            {partnerTagline}
           </p>
           <h1 className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl text-balance">
-            Experience India,{" "}
-            <span className="font-display italic font-semibold text-accent-300">Better</span>
+            {heroTitle.includes("Better") ? (
+              <>
+                {heroTitle.replace(/\s*Better\s*$/i, "").trim() || "Experience India,"}{" "}
+                <span className="font-display italic font-semibold text-accent-300">Better</span>
+              </>
+            ) : (
+              heroTitle
+            )}
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-brand-100 md:text-xl">{SITE.tagline}</p>
+          <p className="mt-5 max-w-xl text-lg text-brand-100 md:text-xl">{heroSubtitle}</p>
           <HeroSearch destinations={searchDestinations} />
           <TrendingDestinations destinations={destinations} />
         </div>

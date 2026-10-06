@@ -33,8 +33,8 @@ export default async function PayBookingPage({ params }: Props) {
             guestEmail={guestEmail}
             guestPhone={guestPhone}
             showMock={
-              process.env.NODE_ENV !== "production" ||
-              process.env.ALLOW_MOCK_PAYMENT === "1"
+              process.env.NODE_ENV !== "production" &&
+              (process.env.ALLOW_MOCK_PAYMENT === "1" || !process.env.RAZORPAY_KEY_SECRET)
             }
           />
         </div>

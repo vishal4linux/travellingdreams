@@ -1,3 +1,5 @@
+import { safeJsonLd } from "@/lib/safe-json-ld";
+
 type Props = {
   name: string;
   description: string;
@@ -39,7 +41,7 @@ export function HotelJsonLd(props: Props) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }

@@ -50,8 +50,9 @@ export async function createPackageBooking(input: z.infer<typeof packageBookingI
   }
 
   const priceRow = pickSeasonalPrice(pkg.prices, travelDate);
-  const addOnTotal =
-    input.addOns?.reduce((s, a) => s + a.price, 0) ?? 0;
+  // Never trust client-supplied add-on prices (prevent free/fake priced add-ons).
+  const addOnTotal = 0;
+  void input.addOns;
 
   let pricing = calculatePackagePrice(
     pkg.basePrice,

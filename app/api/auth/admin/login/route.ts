@@ -30,10 +30,7 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("admin login db error", err);
     return NextResponse.json(
-      {
-        error:
-          "Database is not ready. On the server run: npx prisma db push && npm run db:ensure-admin",
-      },
+      { error: "Service temporarily unavailable. Please try again shortly." },
       { status: 503 }
     );
   }

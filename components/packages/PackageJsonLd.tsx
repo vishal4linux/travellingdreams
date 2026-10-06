@@ -1,3 +1,5 @@
+import { safeJsonLd } from "@/lib/safe-json-ld";
+
 type Props = {
   title: string;
   description?: string | null;
@@ -32,7 +34,7 @@ export function PackageJsonLd({ title, description, url, price, image, durationD
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }

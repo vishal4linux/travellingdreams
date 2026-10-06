@@ -11,6 +11,8 @@ const links: { href: string; label: string; roles?: string[] }[] = [
   { href: "/admin/hotels", label: "Hotels", roles: ["ADMIN", "HOTEL_MANAGER"] },
   { href: "/admin/packages", label: "Packages", roles: ["ADMIN", "CONTENT_MANAGER"] },
   { href: "/admin/offers", label: "Offers", roles: ["ADMIN", "CONTENT_MANAGER"] },
+  { href: "/admin/media", label: "Media", roles: ["ADMIN", "CONTENT_MANAGER", "HOTEL_MANAGER"] },
+  { href: "/admin/settings", label: "Website content", roles: ["ADMIN", "CONTENT_MANAGER"] },
   { href: "/admin/coupons", label: "Coupons", roles: ["ADMIN", "BOOKING_MANAGER"] },
 ];
 

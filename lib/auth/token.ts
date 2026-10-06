@@ -1,11 +1,14 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
 export function sessionSecret() {
-  return (
-    process.env.SESSION_SECRET ??
-    process.env.NEXTAUTH_SECRET ??
-    "dev-only-change-before-production"
-  );
+  const secret = process.env.SESSION_SECRET ?? process.env.NEXTAUTH_SECRET;
+  if (secret) return secret;
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "SESSION_SECRET (or NEXTAUTH_SECRET) must be set in production"
+    );
+  }
+  return "dev-only-change-before-production";
 }
 
 export function signSessionPayload(payload: object): string {

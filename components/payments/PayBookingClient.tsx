@@ -37,15 +37,22 @@ export function PayBookingClient({
   const [error, setError] = useState<string | null>(null);
   const advanceAmount = Math.max(1, Math.round(total * 0.3));
 
-  async function completePay(amount: number, isAdvance: boolean) {
+  async function completePay(
+    amount: number,
+    isAdvance: boolean,
+    opts?: { paymentId?: string; orderId?: string; signature?: string; mock?: boolean }
+  ) {
     const res = await fetch("/api/payments/complete", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         bookingNumber,
-        paymentId: `mock_${Date.now()}`,
+        paymentId: opts?.paymentId ?? `mock_${Date.now()}`,
+        orderId: opts?.orderId,
+        signature: opts?.signature,
         amount,
         isAdvance,
+        mock: opts?.mock ?? true,
       }),
     });
     const data = await res.json();
@@ -62,7 +69,7 @@ export function PayBookingClient({
     setError(null);
     try {
       const amount = full ? remaining : Math.min(advanceAmount, remaining);
-      await completePay(amount, !full);
+      await completePay(amount, !full, { mock: true });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Payment failed");
     } finally {
@@ -83,7 +90,7 @@ export function PayBookingClient({
       if (!orderRes.ok) throw new Error(order.error ?? "Could not start payment");
 
       if (order.provider === "mock" || !order.keyId) {
-        await completePay(amount, isAdvance);
+        await completePay(amount, isAdvance, { mock: true });
         return;
       }
 
@@ -103,26 +110,17 @@ export function PayBookingClient({
         description: `Booking ${bookingNumber}`,
         order_id: order.orderId,
         prefill: { name: guestName, email: guestEmail, contact: guestPhone },
-        handler: async (response: { razorpay_payment_id: string }) => {
-          const res = await fetch("/api/payments/complete", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              bookingNumber,
-              paymentId: response.razorpay_payment_id,
-              amount,
-              isAdvance,
-            }),
+        handler: async (response: {
+          razorpay_payment_id: string;
+          razorpay_order_id: string;
+          razorpay_signature: string;
+        }) => {
+          await completePay(amount, isAdvance, {
+            mock: false,
+            paymentId: response.razorpay_payment_id,
+            orderId: response.razorpay_order_id,
+            signature: response.razorpay_signature,
           });
-          if (!res.ok) {
-            const data = await res.json();
-            throw new Error(data.error ?? "Payment failed");
-          }
-          if (amount >= remaining - 0.01) {
-            router.push(`/booking/confirmation/${bookingNumber}`);
-          } else {
-            router.refresh();
-          }
         },
       });
       rzp.open();
