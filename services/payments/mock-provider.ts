@@ -10,4 +10,7 @@ export const mockPaymentProvider: PaymentProvider = {
       currency: input.currency ?? "INR",
     };
   },
+  verifyPaymentSignature() {
+    return false;
+  },
 };

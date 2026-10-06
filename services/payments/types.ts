@@ -17,7 +17,7 @@ export type CreateOrderResult = {
 export interface PaymentProvider {
   name: string;
   createOrder(input: CreateOrderInput): Promise<CreateOrderResult>;
-  verifyPaymentSignature?(payload: {
+  verifyPaymentSignature(payload: {
     orderId: string;
     paymentId: string;
     signature: string;
