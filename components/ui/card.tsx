@@ -8,8 +8,8 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-border bg-surface-elevated shadow-[var(--shadow-soft)]",
-        "transition-shadow duration-300 hover:shadow-[var(--shadow-card)]",
+        "glass rounded-3xl",
+        "transition duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]",
         className
       )}
       {...props}

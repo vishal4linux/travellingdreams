@@ -4,20 +4,21 @@ import { forwardRef, type ButtonHTMLAttributes } from "react";
 
 const variants = {
   primary:
-    "bg-accent-600 text-white hover:bg-accent-700 focus-visible:ring-accent-500 shadow-md shadow-accent-600/20",
+    "border border-white/50 bg-gradient-to-b from-accent-400 to-accent-600 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_10px_24px_-10px_rgba(234,88,12,0.7)] hover:from-accent-500 hover:to-accent-700 focus-visible:ring-accent-400",
   secondary:
-    "bg-surface-elevated text-ink border border-border hover:border-brand-300 hover:bg-brand-50",
-  ghost: "text-ink-muted hover:bg-brand-50 hover:text-ink",
+    "glass text-ink hover:bg-white/70",
+  ghost: "text-ink-muted hover:bg-white/45 hover:text-ink",
   outline:
-    "border-2 border-brand-700 text-brand-800 hover:bg-brand-50 bg-transparent",
-  whatsapp: "bg-[#25D366] text-white hover:bg-[#1fb855] shadow-sm",
+    "border border-white/70 bg-white/25 text-brand-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-md hover:bg-white/50",
+  whatsapp:
+    "border border-white/40 bg-[#25D366] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_10px_24px_-10px_rgba(37,211,102,0.7)] hover:bg-[#1fb855]",
 } as const;
 
 const sizes = {
-  sm: "h-9 px-4 text-sm rounded-lg",
-  md: "h-11 px-5 text-sm rounded-xl",
-  lg: "h-12 px-6 text-base rounded-xl",
-  icon: "h-10 w-10 rounded-xl",
+  sm: "h-9 px-4 text-sm rounded-full",
+  md: "h-11 px-5 text-sm rounded-full",
+  lg: "h-12 px-6 text-base rounded-full",
+  icon: "h-10 w-10 rounded-full",
 } as const;
 
 type Variant = keyof typeof variants;

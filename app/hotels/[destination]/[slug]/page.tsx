@@ -295,7 +295,7 @@ export default async function HotelDetailPage({ params, searchParams }: Props) {
             </div>
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-2xl border border-border bg-surface-elevated p-5 shadow-[var(--shadow-soft)]">
+              <div className="glass rounded-[1.75rem] p-5">
                 {startingRate != null ? (
                   <p className="font-display text-3xl font-semibold text-brand-800">
                     {formatINR(startingRate)}

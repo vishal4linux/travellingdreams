@@ -34,7 +34,7 @@ export function SearchSuggest() {
         onBlur={() => setTimeout(() => setOpen(false), 150)}
       />
       {open && results.length > 0 ? (
-        <ul className="absolute z-50 mt-1 max-h-64 w-full overflow-auto rounded-xl border border-border bg-surface-elevated py-1 shadow-lg">
+        <ul className="glass absolute z-50 mt-2 max-h-64 w-full overflow-auto rounded-3xl py-1">
           {results.map((r) => (
             <li key={r.href}>
               <Link

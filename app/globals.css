@@ -34,15 +34,15 @@
   --color-accent-700: #c2410c;
   --color-accent-800: #9a3412;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-2xl: 1.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 1.75rem;
 
-  --shadow-soft: 0 4px 24px -4px rgb(28 25 23 / 0.08);
-  --shadow-card: 0 8px 30px -8px rgb(28 25 23 / 0.12);
-  --shadow-nav: 0 1px 0 rgb(28 25 23 / 0.06);
+  --shadow-soft: 0 10px 30px -12px rgb(47 28 22 / 0.16), inset 0 1px 0 rgb(255 255 255 / 0.7);
+  --shadow-card: 0 18px 50px -18px rgb(47 28 22 / 0.22), inset 0 1px 0 rgb(255 255 255 / 0.8);
+  --shadow-nav: 0 12px 40px -16px rgb(47 28 22 / 0.28);
 
   --spacing-section: 5rem;
 }
@@ -53,7 +53,14 @@
   }
 
   body {
-    @apply bg-surface text-ink antialiased;
+    @apply text-ink antialiased;
+    background-color: #f7efe6;
+    background-image:
+      radial-gradient(900px 520px at 8% -8%, rgb(249 115 22 / 0.28), transparent 58%),
+      radial-gradient(780px 480px at 96% 6%, rgb(212 181 146 / 0.55), transparent 52%),
+      radial-gradient(700px 420px at 50% 110%, rgb(127 79 56 / 0.16), transparent 55%),
+      linear-gradient(180deg, #fff9f4 0%, #f6eee6 46%, #efe4d8 100%);
+    background-attachment: fixed;
   }
 
   ::selection {
@@ -85,9 +92,58 @@
 
   .hero-mesh {
     background-image:
-      radial-gradient(at 40% 20%, rgb(249 115 22 / 0.15) 0, transparent 50%),
-      radial-gradient(at 80% 0%, rgb(180 83 9 / 0.2) 0, transparent 45%),
-      radial-gradient(at 0% 50%, rgb(47 28 22 / 0.9) 0, transparent 55%);
+      radial-gradient(at 40% 20%, rgb(249 115 22 / 0.22) 0, transparent 50%),
+      radial-gradient(at 80% 0%, rgb(255 255 255 / 0.12) 0, transparent 42%),
+      radial-gradient(at 0% 50%, rgb(47 28 22 / 0.72) 0, transparent 55%);
+  }
+
+  .glass {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.72), rgb(255 255 255 / 0.42));
+    border: 1px solid rgb(255 255 255 / 0.72);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.92),
+      inset 0 -1px 0 rgb(255 255 255 / 0.28),
+      0 16px 40px -18px rgb(47 28 22 / 0.28);
+    backdrop-filter: blur(22px) saturate(1.65);
+    -webkit-backdrop-filter: blur(22px) saturate(1.65);
+  }
+
+  .glass-dark {
+    background: linear-gradient(180deg, rgb(87 56 43 / 0.62), rgb(47 28 22 / 0.48));
+    border: 1px solid rgb(255 255 255 / 0.18);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.28),
+      0 18px 44px -18px rgb(0 0 0 / 0.45);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  }
+
+  .glass-chip {
+    background: rgb(255 255 255 / 0.16);
+    border: 1px solid rgb(255 255 255 / 0.38);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.45);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  }
+
+  .glass-field {
+    @apply h-11 w-full rounded-2xl px-3 text-sm text-ink;
+    background: rgb(255 255 255 / 0.55);
+    border: 1px solid rgb(255 255 255 / 0.75);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .bg-surface {
+    background-color: transparent !important;
+  }
+
+  .bg-surface-elevated {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.46)) !important;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
   }
 
   .animate-map-dash {

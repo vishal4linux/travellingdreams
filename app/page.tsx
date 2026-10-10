@@ -69,7 +69,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-brand-950/50" aria-hidden />
         <div className="hero-mesh absolute inset-0" aria-hidden />
         <div className="container-site relative flex min-h-[88vh] flex-col justify-center pb-28 pt-10 md:pb-32 md:pt-14">
-          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-100 backdrop-blur-sm">
+          <p className="glass-chip inline-flex w-fit items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
             {partnerTagline}
           </p>
           <h1 className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl text-balance">
@@ -91,7 +91,7 @@ export default async function HomePage() {
       <TrustStrip />
       <PopularSearches />
 
-      <section className="section-padding bg-surface">
+      <section className="section-padding">
         <div className="container-site">
           <SectionHeading
             eyebrow="Travellers' favourite"
@@ -121,7 +121,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-padding bg-white">
+      <section className="section-padding">
         <div className="container-site">
           <SectionHeading
             eyebrow="Our handpicked"
@@ -190,7 +190,7 @@ export default async function HomePage() {
 
       <MoodTrips />
 
-      <section className="section-padding bg-brand-50/60">
+      <section className="section-padding">
         <div className="container-site">
           <SectionHeading
             eyebrow={SITE.partner}
@@ -228,7 +228,7 @@ export default async function HomePage() {
       </section>
 
       {offers.length > 0 ? (
-        <section className="section-padding bg-surface">
+        <section className="section-padding">
           <div className="container-site">
             <SectionHeading
               eyebrow="Don't miss out"
@@ -245,7 +245,7 @@ export default async function HomePage() {
         </section>
       ) : null}
 
-      <section className="section-padding bg-brand-950 text-brand-100">
+      <section className="section-padding">
         <div className="container-site">
           <SectionHeading
             eyebrow="Why us"
@@ -253,14 +253,10 @@ export default async function HomePage() {
             titleAccent="Travelling Dreams"
             description="Built for discerning travelers who want clarity, comfort and expert support."
             align="center"
-            className="[&_h2]:text-white [&_p]:text-brand-200 [&_span]:text-accent-300"
           />
           <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {TRUST_FEATURES.map((item) => (
-              <li
-                key={item.title}
-                className="rounded-2xl border border-brand-800/80 bg-brand-900/50 p-6 backdrop-blur-sm transition-colors hover:border-accent-500/40"
-              >
+              <li key={item.title} className="glass-dark rounded-3xl p-6 transition hover:border-white/30">
                 <h3 className="text-lg font-bold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-200">
                   {item.description}
@@ -272,7 +268,7 @@ export default async function HomePage() {
       </section>
 
       {blogs.length > 0 ? (
-        <section className="section-padding bg-white">
+        <section className="section-padding">
           <div className="container-site">
             <SectionHeading
               eyebrow="Travel inspiration"
@@ -290,7 +286,7 @@ export default async function HomePage() {
       ) : null}
 
       {testimonials.length > 0 ? (
-        <section className="section-padding bg-brand-50/40">
+        <section className="section-padding">
           <div className="container-site">
             <SectionHeading
               eyebrow="Traveller reviews"
@@ -307,12 +303,13 @@ export default async function HomePage() {
         </section>
       ) : null}
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-accent-900 py-24 text-white">
+      <section className="relative overflow-hidden py-16 text-white">
         <div
           className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20"
           aria-hidden
         />
-        <div className="container-site relative text-center">
+        <div className="container-site relative">
+          <div className="glass-dark mx-auto max-w-4xl rounded-[2rem] px-6 py-14 text-center sm:px-12">
           <h2 className="text-3xl font-bold md:text-5xl text-balance">
             Plan your dream vacation
           </h2>
@@ -332,6 +329,7 @@ export default async function HomePage() {
                 Chat on WhatsApp
               </ButtonLink>
             ) : null}
+          </div>
           </div>
         </div>
       </section>

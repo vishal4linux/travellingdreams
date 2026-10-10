@@ -50,11 +50,11 @@ export function HeroSearch({ destinations }: Props) {
   const fmt = (d: Date) => d.toISOString().slice(0, 10);
 
   return (
-    <div className="mt-8 w-full max-w-4xl rounded-2xl border border-white/25 bg-white p-1 shadow-2xl shadow-black/20 sm:mt-10 sm:p-1.5">
+    <div className="glass mt-8 w-full max-w-4xl rounded-[1.75rem] p-1 sm:mt-10 sm:p-1.5">
       <p className="px-4 pt-3 text-sm font-medium text-ink-muted sm:px-5">
         Tell us what you want to experience
       </p>
-      <div className="mx-2 mt-2 flex gap-1 rounded-xl bg-stone-100 p-1 sm:mx-3">
+      <div className="mx-2 mt-2 flex gap-1 rounded-full bg-white/35 p-1 sm:mx-3">
         {(
           [
             ["hotels", "Hotels"],
@@ -66,9 +66,9 @@ export function HeroSearch({ destinations }: Props) {
             type="button"
             onClick={() => setTab(id)}
             className={cn(
-              "flex-1 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+              "flex-1 rounded-full px-4 py-2.5 text-sm font-medium transition-colors",
               tab === id
-                ? "bg-white text-ink shadow-sm ring-1 ring-border/80"
+                ? "bg-white/80 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
                 : "text-ink-muted hover:text-ink"
             )}
           >
@@ -84,7 +84,7 @@ export function HeroSearch({ destinations }: Props) {
             <select
               id="hotel-destination"
               name="destination"
-              className="mt-1.5 flex h-11 w-full rounded-xl border border-border bg-surface-elevated px-3 text-sm"
+              className="glass-field mt-1.5"
               defaultValue=""
             >
               <option value="">All destinations</option>
@@ -128,7 +128,7 @@ export function HeroSearch({ destinations }: Props) {
             <select
               id="pkg-destination"
               name="destination"
-              className="mt-1.5 flex h-11 w-full rounded-xl border border-border bg-surface-elevated px-3 text-sm"
+              className="glass-field mt-1.5"
               defaultValue=""
             >
               <option value="">Any destination</option>

@@ -244,7 +244,7 @@ export function HotelFilters(props: Props) {
     <>
       <aside className={`hidden w-full shrink-0 lg:block lg:w-72 ${props.className ?? ""}`}>
         <form
-          className="sticky top-24 rounded-2xl border border-border bg-surface-elevated p-5 shadow-[var(--shadow-soft)]"
+          className="glass sticky top-24 rounded-[1.75rem] p-5"
           onSubmit={(e) => {
             e.preventDefault();
             submit(e.currentTarget);

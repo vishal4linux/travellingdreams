@@ -22,13 +22,13 @@ export function TrustStrip() {
   return (
     <section className="relative z-10 -mt-8 md:-mt-12">
       <div className="container-site">
-        <div className="grid gap-3 rounded-2xl border border-border/80 bg-surface-elevated p-4 shadow-[var(--shadow-card)] sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-border sm:p-0">
+        <div className="glass grid gap-3 rounded-[1.75rem] p-4 sm:grid-cols-3 sm:gap-0 sm:p-0">
           {items.map(({ icon: Icon, title, subtitle }) => (
             <div
               key={title}
               className="flex items-center gap-3 px-6 py-4 sm:justify-center sm:py-5"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-50 text-accent-600">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/70 bg-white/60 text-accent-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
                 <Icon className="h-5 w-5" aria-hidden />
               </span>
               <div>

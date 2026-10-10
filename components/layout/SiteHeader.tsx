@@ -34,18 +34,16 @@ export function SiteHeader() {
 
   return (
     <>
-      <header
-        className={cn(
-          "sticky top-0 z-50 w-full transition-all duration-300",
-          scrolled
-            ? "border-b border-border bg-surface/95 shadow-[var(--shadow-nav)] backdrop-blur-md"
-            : "border-b border-transparent bg-surface/90 backdrop-blur-md"
-        )}
-      >
+      <header className="sticky top-3 z-50 w-full px-3 sm:px-4">
         <div className="container-site">
-          <div className="flex h-16 flex-wrap items-center justify-between gap-3 lg:h-[4.25rem] lg:flex-nowrap">
+          <div
+            className={cn(
+              "glass flex h-16 flex-wrap items-center justify-between gap-3 rounded-full px-3 transition-shadow duration-300 sm:px-5 lg:h-[4.25rem] lg:flex-nowrap",
+              scrolled && "shadow-[var(--shadow-nav)]"
+            )}
+          >
             <Link href="/" className="group flex shrink-0 items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-brand-800 text-sm font-bold text-white shadow-sm">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-gradient-to-b from-accent-400 to-brand-800 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
                 TD
               </span>
               <span className="flex flex-col">
@@ -67,9 +65,9 @@ export function SiteHeader() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent-50 hover:text-accent-800",
+                    "rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-white/50 hover:text-accent-800",
                     pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
-                      ? "bg-accent-50 text-accent-800"
+                      ? "bg-white/70 text-accent-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
                       : "text-ink-muted"
                   )}
                 >
@@ -100,7 +98,7 @@ export function SiteHeader() {
               </ButtonLink>
               <button
                 type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-ink md:hidden"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
                 aria-label={mobileOpen ? "Close menu" : "Open menu"}
                 onClick={() => setMobileOpen((o) => !o)}
               >

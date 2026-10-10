@@ -153,7 +153,7 @@ export default async function PackageDetailPage({ params }: Props) {
             ) : null}
           </div>
           <aside className="lg:sticky lg:top-24 lg:self-start space-y-4">
-            <div className="rounded-2xl border border-border bg-surface-elevated p-5 shadow-[var(--shadow-soft)]">
+            <div className="glass rounded-[1.75rem] p-5">
               <p className="text-sm text-ink-muted">{destName}</p>
               <p className="font-display text-3xl font-semibold text-brand-800">{formatINR(base)}</p>
               <p className="mt-2 text-sm text-ink-muted">Meals: {pkg.meals ?? "As per itinerary"}</p>

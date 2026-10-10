@@ -13,7 +13,7 @@ const searches = [
 
 export function PopularSearches() {
   return (
-    <section className="border-y border-border bg-white py-8">
+    <section className="py-8">
       <div className="container-site">
         <p className="text-sm font-semibold uppercase tracking-wider text-ink-subtle">
           Popular searches
@@ -23,7 +23,7 @@ export function PopularSearches() {
             <Link
               key={s.href}
               href={s.href}
-              className="shrink-0 rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-ink-muted transition-colors hover:border-accent-300 hover:bg-accent-50 hover:text-accent-800"
+              className="glass shrink-0 rounded-full px-4 py-2 text-sm font-medium text-ink-muted transition hover:text-accent-800"
             >
               {s.label}
             </Link>

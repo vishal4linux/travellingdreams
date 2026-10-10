@@ -92,8 +92,8 @@ export function PackageItineraryExplorer({ days, packageTitle }: Props) {
                   className={cn(
                     "w-full rounded-2xl border px-4 py-3 text-left transition-all",
                     isActive
-                      ? "border-accent-300 bg-accent-50 shadow-sm ring-1 ring-accent-200"
-                      : "border-border bg-surface-elevated hover:border-accent-200 hover:bg-accent-50/40"
+                      ? "glass border-accent-300/70 ring-1 ring-accent-300/50"
+                      : "glass hover:border-white"
                   )}
                 >
                   <div className="flex items-start gap-3">

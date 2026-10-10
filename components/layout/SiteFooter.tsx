@@ -38,8 +38,9 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-brand-950 text-brand-100">
-      <div className="container-site section-padding pb-10">
+    <footer className="pb-6 pt-4 text-brand-100">
+      <div className="container-site">
+        <div className="glass-dark rounded-[2rem] px-6 py-12 sm:px-10">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <p className="font-display text-2xl font-semibold text-white">
@@ -107,7 +108,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-brand-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-brand-400">
             © {year} {SITE.name}. All rights reserved.
           </p>
@@ -118,6 +119,7 @@ export function SiteFooter() {
             <span aria-hidden>·</span>
             <span>Delhi</span>
           </div>
+        </div>
         </div>
       </div>
     </footer>

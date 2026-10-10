@@ -12,7 +12,7 @@ export function HeaderSearch() {
       </div>
       <Link
         href="/search"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-ink-muted transition-colors hover:bg-brand-50 hover:text-ink lg:hidden"
+        className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-white/50 hover:text-ink lg:hidden"
         aria-label="Search"
       >
         <Search className="h-5 w-5" />

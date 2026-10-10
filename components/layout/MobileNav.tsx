@@ -21,14 +21,14 @@ export function MobileNav({ open, onClose }: Props) {
     >
       <div
         className={cn(
-          "absolute inset-0 bg-ink/40 transition-opacity duration-300",
+          "absolute inset-0 bg-brand-950/35 backdrop-blur-sm transition-opacity duration-300",
           open ? "opacity-100" : "opacity-0"
         )}
         onClick={onClose}
       />
       <nav
         className={cn(
-          "absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col bg-surface-elevated shadow-xl transition-transform duration-300",
+          "glass absolute right-3 top-3 flex h-[calc(100%-1.5rem)] w-[min(100%-1.5rem,22rem)] flex-col rounded-[1.75rem] shadow-xl transition-transform duration-300",
           open ? "translate-x-0" : "translate-x-full"
         )}
         aria-label="Mobile"
@@ -39,7 +39,7 @@ export function MobileNav({ open, onClose }: Props) {
               key={link.href}
               href={link.href}
               onClick={onClose}
-              className="rounded-xl px-4 py-3 text-base font-medium text-ink hover:bg-brand-50"
+              className="rounded-2xl px-4 py-3 text-base font-medium text-ink hover:bg-white/50"
             >
               {link.label}
             </Link>

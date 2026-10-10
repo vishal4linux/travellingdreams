@@ -11,7 +11,7 @@ const moods = [
 
 export function MoodTrips() {
   return (
-    <section className="section-padding bg-gradient-to-b from-brand-50/80 to-surface">
+    <section className="section-padding">
       <div className="container-site text-center">
         <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
           Still deciding?
@@ -24,10 +24,10 @@ export function MoodTrips() {
             <li key={label}>
               <Link
                 href={href}
-                className="group flex w-28 flex-col items-center gap-3 rounded-2xl border border-border bg-surface-elevated px-4 py-5 shadow-[var(--shadow-soft)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card)] sm:w-32"
+                className="glass group flex w-28 flex-col items-center gap-3 rounded-[1.5rem] px-4 py-5 transition-all hover:-translate-y-1 sm:w-32"
               >
                 <span
-                  className={`flex h-12 w-12 items-center justify-center rounded-xl text-white shadow-sm ${color}`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/40 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] ${color}`}
                 >
                   <Icon className="h-6 w-6" aria-hidden />
                 </span>

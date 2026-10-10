@@ -23,7 +23,7 @@ export default async function ContactPage({ searchParams }: Props) {
             Thank you—your enquiry was received. Our team will contact you shortly.
           </p>
         ) : null}
-        <ul className="mt-8 space-y-3 text-ink-muted">
+        <ul className="glass mt-8 space-y-3 rounded-[1.75rem] p-6 text-ink-muted">
           <li>Travelling Dreams enquiries: hello@travellingdreams.in</li>
           <li>
             Partner ({SITE.partner}): {SITE.partnerEmail}

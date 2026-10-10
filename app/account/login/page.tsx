@@ -32,7 +32,7 @@ export default function CustomerLoginPage() {
     <div className="section-padding bg-surface">
       <div className="container-site max-w-md">
         <h1 className="font-display text-3xl font-semibold">Login</h1>
-        <form onSubmit={onSubmit} className="mt-8 space-y-4">
+        <form onSubmit={onSubmit} className="glass mt-8 space-y-4 rounded-[1.75rem] p-6">
           <div>
             <Label htmlFor="email">Email</Label>
             <Input id="email" name="email" type="email" required className="mt-1.5" />

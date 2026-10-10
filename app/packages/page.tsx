@@ -25,10 +25,10 @@ export default async function PackagesPage({ searchParams }: Props) {
   ]);
 
   return (
-    <div className="section-padding bg-surface">
+    <div className="section-padding">
       <div className="container-site">
         <SectionHeading title="Holiday Packages" description="Filter by destination, duration, theme and budget." />
-        <form className="mt-8 grid gap-4 rounded-2xl border border-border bg-surface-elevated p-5 md:grid-cols-3 lg:grid-cols-6">
+        <form className="glass mt-8 grid gap-4 rounded-[1.75rem] p-5 md:grid-cols-3 lg:grid-cols-6">
           <div className="md:col-span-2 lg:col-span-2">
             <Label htmlFor="q">Search packages</Label>
             <Input

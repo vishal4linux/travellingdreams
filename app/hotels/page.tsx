@@ -23,7 +23,7 @@ export default async function HotelsPage({ searchParams }: Props) {
     await Promise.all([getHotelFilterMeta(), searchHotels(filters)]);
 
   return (
-    <div className="section-padding bg-surface">
+    <div className="section-padding">
       <div className="container-site">
         <SectionHeading
           title="Hotels"

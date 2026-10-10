@@ -11,7 +11,7 @@ type Props = {
 
 export function PackageMobileBar({ basePrice, bookHref, whatsappHref }: Props) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-surface-elevated/95 p-3 backdrop-blur-md md:hidden">
+    <div className="glass fixed inset-x-3 bottom-3 z-40 rounded-full px-4 py-2 md:hidden">
       <div className="container-site flex items-center justify-between gap-3">
         <div>
           <p className="text-xs text-ink-subtle">From</p>
