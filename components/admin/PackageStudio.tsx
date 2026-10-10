@@ -2,6 +2,7 @@
 
 import { AttractionsEditor } from "@/components/admin/AttractionsEditor";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { FaqEditor } from "@/components/admin/FaqEditor";
 import { ImageManager } from "@/components/admin/ImageManager";
 import { ItineraryEditor } from "@/components/admin/ItineraryEditor";
 import { PackageEditor } from "@/components/admin/PackageEditor";
@@ -11,6 +12,7 @@ import {
   Camera,
   Eye,
   Map,
+  MessageCircleQuestion,
   Route,
   Settings2,
   Sparkles,
@@ -18,13 +20,14 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-type Tab = "overview" | "gallery" | "itinerary" | "places" | "publish";
+type Tab = "overview" | "gallery" | "itinerary" | "places" | "faqs" | "publish";
 
 const TABS: { id: Tab; label: string; icon: typeof Settings2 }[] = [
   { id: "overview", label: "Overview", icon: Settings2 },
   { id: "gallery", label: "Gallery", icon: Camera },
   { id: "itinerary", label: "Day itinerary", icon: Route },
   { id: "places", label: "Map places", icon: Map },
+  { id: "faqs", label: "FAQs & notes", icon: MessageCircleQuestion },
   { id: "publish", label: "Publish & SEO", icon: Sparkles },
 ];
 
@@ -43,6 +46,7 @@ type Props = {
   images: { id: string; url: string; alt?: string | null }[];
   itineraryDays: Parameters<typeof ItineraryEditor>[0]["days"];
   attractions: Parameters<typeof AttractionsEditor>[0]["attractions"];
+  faqs: Parameters<typeof FaqEditor>[0]["faqs"];
 };
 
 export function PackageStudio(props: Props) {
@@ -132,6 +136,8 @@ export function PackageStudio(props: Props) {
           "Add each day with location + coordinates so overnight stops show on the route."}
         {tab === "places" &&
           "This is the magic: clickable famous places on the animated map (why visit, tip, photo)."}
+        {tab === "faqs" &&
+          "Write FAQs travellers open on the package page. Policies and know-before notes live in Overview."}
         {tab === "publish" &&
           "Toggle Featured / Published and refine SEO fields in Overview before going live."}
       </div>
@@ -153,6 +159,7 @@ export function PackageStudio(props: Props) {
         {tab === "places" ? (
           <AttractionsEditor packageId={props.packageId} attractions={props.attractions} />
         ) : null}
+        {tab === "faqs" ? <FaqEditor packageId={props.packageId} faqs={props.faqs} /> : null}
       </div>
     </div>
   );

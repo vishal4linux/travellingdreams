@@ -161,6 +161,23 @@
   }
 }
 
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .itinerary-sheet {
+    max-width: none;
+    padding: 0;
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;

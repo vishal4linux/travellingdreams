@@ -22,6 +22,10 @@ type PackageValues = {
   description?: string | null;
   inclusions?: string | null;
   exclusions?: string | null;
+  cancellationPolicy?: string | null;
+  terms?: string | null;
+  rating?: number | null;
+  reviewCount?: number | null;
   basePrice: number;
   theme?: string;
   heroImage?: string | null;
@@ -60,6 +64,10 @@ export function PackageEditor({
       description: String(fd.get("description") ?? "") || null,
       inclusions: String(fd.get("inclusions") ?? "") || null,
       exclusions: String(fd.get("exclusions") ?? "") || null,
+      cancellationPolicy: String(fd.get("cancellationPolicy") ?? "") || null,
+      terms: String(fd.get("terms") ?? "") || null,
+      rating: fd.get("rating") ? Number(fd.get("rating")) : null,
+      reviewCount: fd.get("reviewCount") ? Number(fd.get("reviewCount")) : 0,
       basePrice: Number(fd.get("basePrice") ?? 0),
       theme: String(fd.get("theme") ?? "ADVENTURE"),
       heroImage: String(fd.get("heroImage") ?? "") || null,
@@ -205,8 +213,9 @@ export function PackageEditor({
           <textarea
             id="highlights"
             name="highlights"
-            rows={2}
+            rows={4}
             defaultValue={initial?.highlights ?? ""}
+            placeholder="One highlight per line"
             className="mt-1 w-full rounded-xl border border-stone-200 px-3 py-2 text-sm"
           />
         </div>
@@ -225,8 +234,9 @@ export function PackageEditor({
           <textarea
             id="inclusions"
             name="inclusions"
-            rows={3}
+            rows={4}
             defaultValue={initial?.inclusions ?? ""}
+            placeholder="One inclusion per line"
             className="mt-1 w-full rounded-xl border border-stone-200 px-3 py-2 text-sm"
           />
         </div>
@@ -235,9 +245,55 @@ export function PackageEditor({
           <textarea
             id="exclusions"
             name="exclusions"
-            rows={3}
+            rows={4}
             defaultValue={initial?.exclusions ?? ""}
+            placeholder="One exclusion per line"
             className="mt-1 w-full rounded-xl border border-stone-200 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <Label htmlFor="terms">Know before you go</Label>
+          <textarea
+            id="terms"
+            name="terms"
+            rows={5}
+            defaultValue={initial?.terms ?? ""}
+            placeholder="One point per line — GST, ID, permits, weather notes"
+            className="mt-1 w-full rounded-xl border border-stone-200 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <Label htmlFor="cancellationPolicy">Cancellation policy</Label>
+          <textarea
+            id="cancellationPolicy"
+            name="cancellationPolicy"
+            rows={3}
+            defaultValue={initial?.cancellationPolicy ?? ""}
+            className="mt-1 w-full rounded-xl border border-stone-200 px-3 py-2 text-sm"
+          />
+        </div>
+        <div>
+          <Label htmlFor="rating">Guest rating (0–5)</Label>
+          <Input
+            id="rating"
+            name="rating"
+            type="number"
+            min={0}
+            max={5}
+            step="0.1"
+            defaultValue={initial?.rating ?? ""}
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="reviewCount">Review count</Label>
+          <Input
+            id="reviewCount"
+            name="reviewCount"
+            type="number"
+            min={0}
+            defaultValue={initial?.reviewCount ?? 0}
+            className="mt-1"
           />
         </div>
         <div className="sm:col-span-2">

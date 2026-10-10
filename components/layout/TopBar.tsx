@@ -6,7 +6,7 @@ export function TopBar() {
   const phone = SITE.partnerPhones[0].replace(/\s/g, "");
 
   return (
-    <div className="hidden text-brand-100 md:block">
+    <div className="no-print hidden text-brand-100 md:block">
       <div className="container-site pt-2">
         <div className="glass-dark flex h-9 items-center justify-between rounded-full px-4 text-xs">
           <div className="flex items-center gap-5">

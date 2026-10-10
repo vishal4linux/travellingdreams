@@ -23,6 +23,7 @@ export default async function EditPackagePage({ params }: Props) {
         images: { orderBy: { sortOrder: "asc" } },
         itinerary: { orderBy: { dayNumber: "asc" } },
         attractions: { orderBy: [{ sortOrder: "asc" }, { name: "asc" }] },
+        faqs: { orderBy: { sortOrder: "asc" } },
       },
     }),
     prisma.destination.findMany({
@@ -64,6 +65,10 @@ export default async function EditPackagePage({ params }: Props) {
         description: pkg.description,
         inclusions: pkg.inclusions,
         exclusions: pkg.exclusions,
+        cancellationPolicy: pkg.cancellationPolicy,
+        terms: pkg.terms,
+        rating: pkg.rating,
+        reviewCount: pkg.reviewCount,
         basePrice: price,
         theme: pkg.theme,
         heroImage: pkg.heroImage,
@@ -73,6 +78,7 @@ export default async function EditPackagePage({ params }: Props) {
       images={pkg.images}
       itineraryDays={pkg.itinerary}
       attractions={pkg.attractions}
+      faqs={pkg.faqs}
     />
   );
 }
