@@ -50,6 +50,21 @@ export const getPartnerHotels = cache(async (limit = 8) => {
   return mapPartnerHotelRows(hotels);
 });
 
+export const getHomePackages = cache(async (limit = 8) => {
+  return prisma.package.findMany({
+    where: { isPublished: true },
+    orderBy: [{ isFeatured: "desc" }, { updatedAt: "desc" }],
+    take: limit,
+    include: {
+      destinations: {
+        orderBy: { sortOrder: "asc" },
+        take: 1,
+        include: { destination: { select: { name: true, slug: true } } },
+      },
+    },
+  });
+});
+
 export const getFeaturedPackages = cache(async (limit = 6) => {
   return prisma.package.findMany({
     where: { isPublished: true, isFeatured: true },
