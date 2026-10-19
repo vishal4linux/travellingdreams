@@ -2,7 +2,7 @@
 
 import { NAV_LINKS, SITE } from "@/lib/constants/site";
 import { cn } from "@/lib/utils";
-import { Menu, Phone, Search, User, X } from "lucide-react";
+import { Menu, Phone, User, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
