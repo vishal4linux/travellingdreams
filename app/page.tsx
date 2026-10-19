@@ -1,15 +1,10 @@
 import { BlogCard } from "@/components/home/BlogCard";
-import { DestinationCard } from "@/components/home/DestinationCard";
-import { HeroSearch } from "@/components/home/HeroSearch";
-import { HorizontalScrollRow } from "@/components/home/HorizontalScrollRow";
+import { HomeDiscover } from "@/components/home/HomeDiscover";
 import { HotelCard } from "@/components/home/HotelCard";
-import { MoodTrips } from "@/components/home/MoodTrips";
 import { OfferCard } from "@/components/home/OfferCard";
-import { PackageCard } from "@/components/home/PackageCard";
-import { PopularSearches } from "@/components/home/PopularSearches";
+import { OfferPrompt } from "@/components/home/OfferPrompt";
+import { PosterRail } from "@/components/home/PosterRail";
 import { TestimonialCard } from "@/components/home/TestimonialCard";
-import { TrendingDestinations } from "@/components/home/TrendingDestinations";
-import { TrustStrip } from "@/components/home/TrustStrip";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ButtonLink } from "@/components/ui/button";
 import { TRUST_FEATURES, SITE } from "@/lib/constants/site";
@@ -59,141 +54,45 @@ export default async function HomePage() {
     ? buildWhatsAppUrl(undefined, waNumber)
     : buildWhatsAppUrl();
 
+  const fallback =
+    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop";
+
   return (
     <div>
-      <section className="relative min-h-[88vh] overflow-hidden bg-brand-950 text-white">
-        <div
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"
-          aria-hidden
-        />
-        <div className="absolute inset-0 bg-brand-950/50" aria-hidden />
-        <div className="hero-mesh absolute inset-0" aria-hidden />
-        <div className="container-site relative flex min-h-[88vh] flex-col justify-center pb-28 pt-10 md:pb-32 md:pt-14">
-          <p className="glass-chip inline-flex w-fit items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-            {partnerTagline}
-          </p>
-          <h1 className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl text-balance">
-            {heroTitle.includes("Better") ? (
-              <>
-                {heroTitle.replace(/\s*Better\s*$/i, "").trim() || "Experience India,"}{" "}
-                <span className="font-display italic font-semibold text-accent-300">Better</span>
-              </>
-            ) : (
-              heroTitle
-            )}
-          </h1>
-          <p className="mt-5 max-w-xl text-lg text-brand-100 md:text-xl">{heroSubtitle}</p>
-          <HeroSearch destinations={searchDestinations} />
-          <TrendingDestinations destinations={destinations} />
-        </div>
-      </section>
+      <h1 className="sr-only">{heroTitle}</h1>
+      <p className="sr-only">{heroSubtitle}</p>
+      <HomeDiscover destinations={searchDestinations} />
+      <OfferPrompt />
+      <PosterRail
+        title="Trending places"
+        href="/destinations"
+        linkLabel="All places"
+        items={destinations.map((d) => ({
+          href: `/destinations/${d.slug}`,
+          title: d.name,
+          subtitle: d.tagline ?? d.state,
+          image: d.cardImage ?? fallback,
+        }))}
+      />
+      <PosterRail
+        title="Holiday packages"
+        href="/packages"
+        linkLabel="All packages"
+        items={packages.map((p) => {
+          const dest = p.destinations[0]?.destination;
+          return {
+            href: `/packages/${dest?.slug ?? "india"}/${p.slug}`,
+            title: p.title,
+            subtitle: `${p.durationNights}N / ${p.durationDays}D · ${dest?.name ?? "India"}`,
+            image: p.heroImage ?? fallback,
+          };
+        })}
+      />
 
-      <TrustStrip />
-      <PopularSearches />
-
-      <section className="section-padding">
+      <section className="py-10">
         <div className="container-site">
           <SectionHeading
-            eyebrow="Travellers' favourite"
-            title="Trending destinations"
-            titleAccent="destinations"
-            description="Handpicked regions we know deeply—from Himachal peaks to Rajasthan heritage."
-          />
-          <div className="mt-10 lg:hidden">
-            <HorizontalScrollRow>
-              {destinations.map((d) => (
-                <div key={d.id} className="w-[240px] shrink-0">
-                  <DestinationCard {...d} />
-                </div>
-              ))}
-            </HorizontalScrollRow>
-          </div>
-          <div className="mt-10 hidden gap-6 lg:grid lg:grid-cols-4">
-            {destinations.map((d) => (
-              <DestinationCard key={d.id} {...d} />
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <ButtonLink href="/destinations" variant="secondary" size="lg">
-              View all destinations
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow="Our handpicked"
-            title="Trip-worthy holiday packages"
-            titleAccent="holiday packages"
-            description="Fixed departures and curated routes with meals, transport and stays included."
-          />
-          <div className="mt-10 lg:hidden">
-            <HorizontalScrollRow>
-              {packages.map((p) => {
-                const dest = p.destinations[0]?.destination;
-                return (
-                  <div key={p.id} className="w-[320px] shrink-0">
-                    <PackageCard
-                      title={p.title}
-                      slug={p.slug}
-                      destinationSlug={dest?.slug ?? "india"}
-                      destinationName={dest?.name ?? "India"}
-                      durationNights={p.durationNights}
-                      durationDays={p.durationDays}
-                      startingCity={p.startingCity}
-                      placesCovered={p.placesCovered}
-                      hotelCategory={p.hotelCategory}
-                      meals={p.meals}
-                      transport={p.transport}
-                      basePrice={decimalToNumber(p.basePrice) ?? 0}
-                      rating={p.rating}
-                      heroImage={p.heroImage}
-                    />
-                  </div>
-                );
-              })}
-            </HorizontalScrollRow>
-          </div>
-          <div className="mt-10 hidden gap-8 md:grid md:grid-cols-2 xl:grid-cols-3">
-            {packages.map((p) => {
-              const dest = p.destinations[0]?.destination;
-              return (
-                <PackageCard
-                  key={p.id}
-                  title={p.title}
-                  slug={p.slug}
-                  destinationSlug={dest?.slug ?? "india"}
-                  destinationName={dest?.name ?? "India"}
-                  durationNights={p.durationNights}
-                  durationDays={p.durationDays}
-                  startingCity={p.startingCity}
-                  placesCovered={p.placesCovered}
-                  hotelCategory={p.hotelCategory}
-                  meals={p.meals}
-                  transport={p.transport}
-                  basePrice={decimalToNumber(p.basePrice) ?? 0}
-                  rating={p.rating}
-                  heroImage={p.heroImage}
-                />
-              );
-            })}
-          </div>
-          <div className="mt-10 text-center">
-            <ButtonLink href="/packages" size="lg">
-              Explore all packages
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-
-      <MoodTrips />
-
-      <section className="section-padding">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow={SITE.partner}
+            eyebrow={partnerTagline}
             title="Partner hotels you'll love"
             titleAccent="love"
             description="LA Riqueza properties across Uttarakhand and Himachal, Horizon by Shanti in Delhi, and London Castle Kanatal opening soon."
