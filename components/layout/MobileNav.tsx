@@ -16,14 +16,14 @@ export function MobileNav({ open, onClose }: Props) {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-40 xl:hidden",
+        "fixed inset-0 z-40",
         open ? "pointer-events-auto" : "pointer-events-none"
       )}
       aria-hidden={!open}
     >
       <div
         className={cn(
-          "absolute inset-0 bg-slate-950/50 transition-opacity duration-300",
+          "absolute inset-0 bg-brand-950/50 transition-opacity duration-300",
           open ? "opacity-100" : "opacity-0"
         )}
         onClick={onClose}
@@ -35,9 +35,9 @@ export function MobileNav({ open, onClose }: Props) {
         )}
         aria-label="Mobile"
       >
-        <div className="border-b border-slate-100 px-5 pb-4 pt-28">
-          <p className="text-xs font-bold uppercase tracking-wider text-teal-700">Menu</p>
-          <p className="mt-1 text-sm text-slate-600">Hotels, packages, custom trips and rates.</p>
+        <div className="border-b border-brand-100 px-5 pb-4 pt-28">
+          <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Menu</p>
+          <p className="mt-1 text-sm text-ink-muted">More pages, bookings and rates.</p>
         </div>
         <div className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
           {NAV_LINKS.map((link) => {
@@ -50,7 +50,7 @@ export function MobileNav({ open, onClose }: Props) {
                 onClick={onClose}
                 className={cn(
                   "rounded-xl px-4 py-3 text-base font-semibold",
-                  active ? "bg-teal-700 text-white" : "text-slate-800 hover:bg-teal-50"
+                  active ? "bg-brand-800 text-white" : "text-ink hover:bg-brand-50"
                 )}
               >
                 {link.label}
@@ -58,32 +58,32 @@ export function MobileNav({ open, onClose }: Props) {
             );
           })}
         </div>
-        <div className="grid gap-2 border-t border-slate-100 p-4">
+        <div className="grid gap-2 border-t border-brand-100 p-4">
           <Link
             href="/customize-trip"
             onClick={onClose}
-            className="rounded-xl bg-orange-500 px-4 py-3 text-center text-sm font-bold text-white"
+            className="rounded-xl bg-accent-600 px-4 py-3 text-center text-sm font-bold text-white"
           >
             Plan a custom itinerary
           </Link>
           <Link
             href="/contact"
             onClick={onClose}
-            className="rounded-xl bg-teal-700 px-4 py-3 text-center text-sm font-bold text-white"
+            className="rounded-xl bg-brand-800 px-4 py-3 text-center text-sm font-bold text-white"
           >
             Ask for rates
           </Link>
           <Link
             href="/account/lookup"
             onClick={onClose}
-            className="rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-800"
+            className="rounded-xl border border-brand-200 px-4 py-3 text-center text-sm font-semibold text-ink"
           >
             Find my booking
           </Link>
           <Link
             href="/account/login"
             onClick={onClose}
-            className="rounded-xl px-4 py-3 text-center text-sm font-semibold text-teal-800"
+            className="rounded-xl px-4 py-3 text-center text-sm font-semibold text-brand-800"
           >
             Login
           </Link>
