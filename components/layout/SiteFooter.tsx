@@ -1,4 +1,5 @@
 import { SITE } from "@/lib/constants/site";
+import { Phone } from "lucide-react";
 import Link from "next/link";
 
 const footerDestinations = [
@@ -14,112 +15,110 @@ const footerDestinations = [
 
 const footerLinks = {
   explore: [
-    { href: "/packages", label: "Holiday Packages" },
+    { href: "/packages", label: "Holiday packages" },
     { href: "/hotels", label: "Hotels" },
     { href: "/la-riqueza-hotels", label: "LA Riqueza Hotels" },
     { href: "/offers", label: "Offers" },
-    { href: "/inspiration", label: "Travel Inspiration" },
+    { href: "/customize-trip", label: "Custom itinerary" },
   ],
   support: [
-    { href: "/contact", label: "Contact Us" },
-    { href: "/customize-trip", label: "Customize My Trip" },
-    { href: "/account/bookings", label: "My Booking" },
-    { href: "/faq", label: "FAQ" },
-  ],
-  legal: [
-    { href: "/privacy", label: "Privacy Policy" },
-    { href: "/terms", label: "Terms & Conditions" },
-    { href: "/cancellation", label: "Cancellation Policy" },
-    { href: "/refund", label: "Refund Policy" },
+    { href: "/contact", label: "Ask for rates" },
+    { href: "/account/lookup", label: "Find my booking" },
+    { href: "/privacy", label: "Privacy" },
+    { href: "/terms", label: "Terms" },
+    { href: "/cancellation", label: "Cancellation" },
+    { href: "/refund", label: "Refunds" },
   ],
 };
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
+  const phone = SITE.partnerPhones[0].replace(/\s/g, "");
 
   return (
-    <footer className="pb-6 pt-4 text-brand-100">
-      <div className="container-site">
-        <div className="glass-dark rounded-[2rem] px-6 py-12 sm:px-10">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
-            <p className="font-display text-2xl font-semibold text-white">
-              {SITE.name}
-            </p>
-            <p className="mt-2 text-sm text-brand-200">{SITE.partnerTagline}</p>
-            <p className="mt-4 text-sm leading-relaxed text-brand-300">
-              Premium hotel stays and handcrafted holiday packages across{" "}
-              {SITE.regions.join(", ")} and beyond.
+    <footer className="mt-8 bg-slate-950 text-slate-100">
+      <div className="bg-teal-700">
+        <div className="container-site flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-lg font-bold text-white sm:text-xl">Need a custom itinerary or today’s rates?</p>
+            <p className="mt-1 text-sm text-teal-50">
+              Tell us the dates, group size and places. We reply with a clear quote.
             </p>
           </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-200">
-              Destinations
-            </h3>
-            <ul className="mt-4 space-y-2">
-              {footerDestinations.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-brand-300 transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-200">
-              Explore
-            </h3>
-            <ul className="mt-4 space-y-2">
-              {footerLinks.explore.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-brand-300 transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-200">
-              Support & Legal
-            </h3>
-            <ul className="mt-4 space-y-2">
-              {[...footerLinks.support, ...footerLinks.legal].map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-brand-300 transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Link
+              href="/customize-trip"
+              className="rounded-xl bg-orange-500 px-5 py-3 text-center text-sm font-bold text-white hover:bg-orange-400"
+            >
+              Plan my trip
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-teal-800 hover:bg-teal-50"
+            >
+              Send a query
+            </Link>
           </div>
         </div>
+      </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-brand-400">
-            © {year} {SITE.name}. All rights reserved.
+      <div className="container-site grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <p className="text-xl font-bold text-white">{SITE.name}</p>
+          <p className="mt-2 text-sm font-medium text-amber-300">{SITE.partnerTagline}</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-300">
+            Hotels and holiday packages across {SITE.regions.join(", ")} and beyond.
           </p>
-          <div className="flex gap-4 text-sm text-brand-400">
-            <span>Uttarakhand</span>
-            <span aria-hidden>·</span>
-            <span>Himachal Pradesh</span>
-            <span aria-hidden>·</span>
-            <span>Delhi</span>
-          </div>
+          <a href={`tel:${phone}`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white">
+            <Phone className="h-4 w-4 text-amber-300" />
+            {SITE.partnerPhones[0]}
+          </a>
         </div>
+
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-amber-300">Destinations</h2>
+          <ul className="mt-4 space-y-2">
+            {footerDestinations.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="text-sm text-slate-200 hover:text-amber-300">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-amber-300">Explore</h2>
+          <ul className="mt-4 space-y-2">
+            {footerLinks.explore.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="text-sm text-slate-200 hover:text-amber-300">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-amber-300">Help</h2>
+          <ul className="mt-4 space-y-2">
+            {footerLinks.support.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="text-sm text-slate-200 hover:text-amber-300">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10">
+        <div className="container-site flex flex-col gap-2 py-5 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {year} {SITE.name}. All rights reserved.</p>
+          <p>Uttarakhand · Himachal Pradesh · Delhi</p>
         </div>
       </div>
     </footer>

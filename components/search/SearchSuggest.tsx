@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export function SearchSuggest() {
+export function SearchSuggest({ compact = false }: { compact?: boolean }) {
   const [q, setQ] = useState("");
   const [results, setResults] = useState<{ type: string; label: string; href: string }[]>([]);
   const [open, setOpen] = useState(false);
@@ -28,7 +28,8 @@ export function SearchSuggest() {
       <Input
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="Search destinations, hotels, packages…"
+        placeholder={compact ? "Search trips" : "Search destinations, hotels, packages…"}
+        className={compact ? "h-10 rounded-lg bg-slate-50" : undefined}
         aria-label="Search"
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}

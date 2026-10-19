@@ -1,10 +1,6 @@
 "use client";
 
-import { TopBar } from "@/components/layout/TopBar";
-import { usePathname } from "next/navigation";
-
+/** Phone, plan-trip and rates now live in the main header. */
 export function TopBarWrapper() {
-  const pathname = usePathname();
-  if (pathname.startsWith("/admin")) return null;
-  return <TopBar />;
+  return null;
 }

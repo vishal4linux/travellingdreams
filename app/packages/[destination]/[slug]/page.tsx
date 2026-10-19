@@ -87,7 +87,7 @@ export default async function PackageDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <div className="sticky top-[4.6rem] z-30 border-b border-white/40 bg-[#f7efe6]/75 backdrop-blur-xl">
+      <div className="sticky top-[6.25rem] z-30 border-b border-teal-900/10 bg-white/95 backdrop-blur-xl sm:top-[6.5rem]">
         <div className="container-site flex gap-1 overflow-x-auto py-2 text-sm font-semibold">
           {[
             ["#overview", "Overview"],
@@ -96,7 +96,7 @@ export default async function PackageDetailPage({ params }: Props) {
             ["#policies", "Know before you go"],
             ["#faq", "FAQs"],
           ].map(([href, label]) => (
-            <a key={href} href={href} className="shrink-0 rounded-full px-3 py-2 text-ink-muted hover:bg-white/60 hover:text-ink">
+            <a key={href} href={href} className="shrink-0 rounded-lg px-3 py-2 text-slate-700 hover:bg-teal-50 hover:text-teal-800">
               {label}
             </a>
           ))}

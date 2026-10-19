@@ -28,14 +28,14 @@ export const ASSOCIATED_PROPERTY_NAMES = [
 ] as const;
 
 export const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/hotels", label: "Hotels" },
-  { href: "/packages", label: "Holiday Packages" },
-  { href: "/destinations", label: "Destinations" },
-  { href: "/la-riqueza-hotels", label: "LA Riqueza Hotels" },
-  { href: "/offers", label: "Offers" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home", short: "Home" },
+  { href: "/hotels", label: "Hotels", short: "Hotels" },
+  { href: "/packages", label: "Holiday Packages", short: "Packages" },
+  { href: "/destinations", label: "Destinations", short: "Places" },
+  { href: "/la-riqueza-hotels", label: "LA Riqueza Hotels", short: "LA Riqueza" },
+  { href: "/offers", label: "Offers", short: "Offers" },
+  { href: "/about", label: "About Us", short: "About" },
+  { href: "/contact", label: "Contact", short: "Contact" },
 ] as const;
 
 export const TRUST_FEATURES = [
